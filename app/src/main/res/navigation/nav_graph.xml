@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/mainFragment">
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.kieronquinn.app.darq.fragments.MainFragment"
+        android:label="@string/app_name">
+        <action
+            android:id="@+id/action_mainFragment_to_appsFragment"
+            app:destination="@id/appsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+        <action
+            android:id="@+id/action_mainFragment_to_faqFragment"
+            app:destination="@id/faqFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/appsFragment"
+        android:name="com.kieronquinn.app.darq.fragments.AppsFragment"
+        android:label="@string/setting_whitelist_title"
+        tools:layout="@layout/fragment_apps" />
+    <fragment
+        android:id="@+id/faqFragment"
+        android:name="com.kieronquinn.app.darq.fragments.FaqFragment"
+        tools:layout="@layout/fragment_faq"
+        android:label="@string/setting_faq_title" />
+
+</navigation>

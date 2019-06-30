@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <com.kieronquinn.app.darq.preferences.SwitchPreference
+        android:defaultValue="false"
+        android:key="switch_dark_mode"
+        android:icon="@drawable/ic_dark_theme"
+        android:title="@string/setting_dark_mode_title"
+        android:summary="@string/setting_dark_mode_desc" />
+    <com.kieronquinn.app.darq.preferences.SwitchPreference
+        android:defaultValue="false"
+        android:key="switch_force_dark_mode"
+        android:icon="@drawable/ic_bug"
+        android:title="@string/setting_force_dark_mode_title"
+        android:summary="@string/setting_force_dark_mode_desc" />
+    <com.kieronquinn.app.darq.preferences.SwitchPreference
+        android:defaultValue="false"
+        android:key="switch_auto_night_dark"
+        android:icon="@drawable/ic_theme_light_dark"
+        android:title="@string/setting_day_night_auto_title"
+        android:summary="@string/setting_day_night_auto_desc" />
+    <com.kieronquinn.app.darq.preferences.Preference
+        android:key="preference_whitelist"
+        android:title="@string/setting_whitelist_title"
+        android:summary="@plurals/setting_whitelist_desc" />
+    <com.kieronquinn.app.darq.preferences.Preference
+        android:key="preference_faq_about"
+        android:icon="@drawable/ic_chevron_down"
+        android:title="@string/setting_faq_about_toggle" />
+    <com.kieronquinn.app.darq.preferences.Preference
+        android:defaultValue="false"
+        android:key="test"
+        android:title="Test"
+        android:visibility="gone"
+        android:summary="Test preference to call (broken) status bar tint method in IPC" />
+</androidx.preference.PreferenceScreen>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="activity_padding">16dp</dimen>
+    <dimen name="margin_small">8dp</dimen>
+    <dimen name="item_height">56dp</dimen>
+    <dimen name="bottom_sheet_corner_radius">16dp</dimen>
+</resources>

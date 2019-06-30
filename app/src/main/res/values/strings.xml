@@ -1,0 +1,37 @@
+<resources>
+    <string name="app_name">DarQ</string>
+    <string name="accessibility_service_description">DarQ Accessibility Service\n\nRequired for the app to work, allows it to monitor apps running and enable/disable the force-dark setting accordingly. Enable it and return the app to continue.\n\nPLEASE NOTE:\nAs of Android Q, when enabling an accessibility service, no matter how minor its access, you will be warned that the service can read the screen and act on behalf of you, and that it is not appropriate for most apps. This is normal, please just tap \'Ok\'. If you wish to view what DarQ is doing (and more importantly, not doing) programmatically, you can view its source on GitHub.</string>
+    <string name="setting_dark_mode_title">Enable Dark Theme</string>
+    <string name="setting_dark_mode_desc">Toggle the main system dark theme</string>
+    <string name="setting_force_dark_mode_title">Force Dark Theme</string>
+    <string name="setting_force_dark_mode_desc">Enable the force dark theme setting globally. This overrides the enabled apps list.</string>
+    <string name="setting_force_dark_mode_snackbar">Restart any apps to apply this change</string>
+    <string name="setting_day_night_auto_title">Auto Dark Theme</string>
+    <string name="setting_day_night_auto_desc">Automatically enable dark theme at sunset and disable at sunrise</string>
+    <string name="setting_whitelist_title">Enabled Apps</string>
+    <string name="setting_faq_about_toggle">FAQ &amp; About</string>
+    <string name="setting_faq_title">Frequently Asked Questions</string>
+    <string name="setting_xda_thread_title">XDA Thread</string>
+    <string name="setting_twitter_title">Follow me on Twitter</string>
+    <string name="setting_github_title">View source on GitHub</string>
+    <string name="setting_donate_title">Donate</string>
+    <string name="setting_licences_title">Licences</string>
+    <string name="setting_about_title">About</string>
+    <string name="setting_about_desc">DarQ version %1s\n© 2019 Kieron Quinn</string>
+    <string name="checking_root">Checking root…</string>
+    <string name="checking_service">Connecting to service…</string>
+    <string name="loading">Loading…</string>
+    <string name="loading_apps">Loading apps…</string>
+    <string name="bottom_sheet_no_root_title">No Root Detected</string>
+    <string name="bottom_sheet_no_root_desc">Your device is not rooted, or you denied this app root permission. Due to security restrictions imposed by the Android system, this app cannot work without root. Please check your device is rooted, and that you have granted access for this app.</string>
+    <string name="bottom_sheet_accessibility_service">Enable Accessibility Service</string>
+    <string name="bottom_sheet_accessibility_service_desc">DarQ requires the use of an accessibility to reliably and quickly respond to apps opening and closing. Please enable it from Android\'s Accessibility Settings.</string>
+    <string name="bottom_sheet_accessibility_service_not_running_title">Accessibility Service not running</string>
+    <string name="bottom_sheet_accessibility_service_not_running_desc">DarQ\'s accessibility service is not currently running, please try disabling it and re-enabling it in Android\'s Accessibility Settings. If that doesn\'t work, please try rebooting your device.</string>
+    <string name="bottom_sheet_auto_dark_title">Location Permission</string>
+    <string name="bottom_sheet_auto_dark_desc">Auto dark theme uses dynamic sunrise and sunset calculation, based on your location. This can either be obtained using the location permission (more accurate) or by your timezone city. Your timezone is currently set to %1s.\n\nNote: Due to changes in Android Q, you have the choice of only allowing the permission when the app is running. As DarQ runs in the background, please select "Allow all the time" on the permission prompt.</string>
+    <string name="bottom_sheet_auto_dark_timezone">Timezone</string>
+    <string name="bottom_sheet_auto_dark_location">Location</string>
+    <string name="dark_mode_warning">Force dark requires the system dark theme to be enabled to work. Please enable it below to see changes in apps.</string>
+    <string name="permission_failed">Permission denied, please grant manually in your device\'s app settings</string>
+</resources>

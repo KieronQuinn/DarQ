@@ -1,0 +1,60 @@
+<resources>
+
+    <style name="AppTheme.Initial" parent="Theme.MaterialComponents.DayNight" />
+
+    <style name="AppTheme.Light" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
+        <item name="toolbarColor">@android:color/white</item>
+    </style>
+
+    <style name="AppTheme.Dark" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
+        <item name="android:windowBackground">@color/background_dark</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
+        <item name="toolbarColor">@color/toolbar_dark</item>
+    </style>
+
+    <style name="TextAppearance.AppCompat.Small.Darq" parent="TextAppearance.AppCompat.Small">
+        <item name="android:fontFamily">@font/hkgrotesk</item>
+    </style>
+
+    <style name="TextAppearance.AppCompat.Medium.Darq" parent="TextAppearance.AppCompat.Medium">
+        <item name="android:fontFamily">@font/hkgrotesk</item>
+    </style>
+
+    <style name="TextAppearance.AppCompat.Large.Darq" parent="TextAppearance.AppCompat.Large">
+        <item name="android:fontFamily">@font/hkgrotesk</item>
+    </style>
+
+    <style name="BaseBottomSheetDialog" parent="@style/Theme.Design.Light.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="bottomSheetStyle">@style/BottomSheet</item>
+        <item name="android:windowLightNavigationBar">true</item>
+        <item name="android:navigationBarColor">@android:color/white</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+
+    <style name="BaseBottomSheetDialog.Dark" parent="@style/Theme.Design.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="bottomSheetStyle">@style/BottomSheet.Dark</item>
+        <item name="android:windowLightNavigationBar">false</item>
+        <item name="android:navigationBarColor">@color/toolbar_dark</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+
+    <style name="BottomSheet" parent="@style/Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/bottom_sheet_rounded_bg</item>
+    </style>
+
+    <style name="BottomSheet.Dark" parent="@style/Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/bottom_sheet_rounded_bg_dark</item>
+    </style>
+
+</resources>

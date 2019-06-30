@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:id="@+id/root"
+    tools:context=".MainActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:elevation="4dp"
+        android:outlineProvider="bounds"
+        app:contentInsetStart="0dp">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:animateLayoutChanges="true">
+
+            <View
+                android:id="@+id/toolbar_background"
+                android:layout_width="match_parent"
+                android:background="?toolbarColor"
+                android:elevation="4dp"
+                android:layout_height="match_parent" />
+
+            <View
+                android:id="@+id/toolbar_background_dark"
+                android:layout_width="match_parent"
+                android:background="@color/toolbar_dark"
+                android:elevation="4dp"
+                android:visibility="gone"
+                android:layout_height="match_parent" />
+
+            <View
+                android:id="@+id/toolbar_background_light"
+                android:layout_width="match_parent"
+                android:visibility="gone"
+                android:elevation="4dp"
+                android:background="@android:color/white"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:id="@+id/toolbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="?actionBarSize"
+                android:gravity="center"
+                android:layout_gravity="bottom|center_horizontal"
+                android:fontFamily="@font/hkgrotesk"
+                android:text="@string/app_name"
+                android:elevation="4dp"
+                android:textAppearance="@style/Base.TextAppearance.Widget.AppCompat.Toolbar.Title" />
+
+            <ImageView
+                android:layout_width="?actionBarSize"
+                android:layout_height="?actionBarSize"
+                android:layout_gravity="bottom"
+                android:id="@+id/home"
+                android:tint="@android:color/black"
+                android:src="?attr/homeAsUpIndicator"
+                android:padding="@dimen/activity_padding"
+                android:foreground="@drawable/rounded_ripple"
+                android:clickable="true"
+                android:focusable="true"
+                android:elevation="4dp"/>
+
+        </FrameLayout>
+
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/loadingState"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:fitsSystemWindows="true"
+        android:orientation="vertical">
+
+        <View
+            android:id="@+id/lightAnimationReveal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/windowBackground"
+            android:visibility="invisible" />
+
+        <View
+            android:id="@+id/darkAnimationReveal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/black"
+            android:visibility="invisible" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottie"
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="?actionBarSize"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toTopOf="@id/loading_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/daynight" />
+
+        <TextView
+            android:id="@+id/loading_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/hkgrotesk"
+            android:paddingTop="16dp"
+            android:text="@string/loading"
+            android:textColor="?android:textColorPrimary"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lottie" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="false"
+        android:layout_marginTop="?actionBarSize"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <include layout="@layout/include_dark_mode_warning"/>
+
+        <fragment
+            android:id="@+id/nav_host_fragment"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:defaultNavHost="true"
+            app:navGraph="@navigation/nav_graph" />
+
+    </LinearLayout>
+
+
+</FrameLayout>
