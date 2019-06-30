@@ -76,7 +76,7 @@ class MainFragment : PreferenceFragmentCompat(), ActivityCallbacks {
                 findNavController().navigate(R.id.action_mainFragment_to_appsFragment)
                 true
             }
-            testPreference?.isVisible = !BuildConfig.DEBUG
+            testPreference?.isVisible = BuildConfig.DEBUG
             testPreference?.setOnPreferenceClickListener {
                 activity?.let {activity ->
                     val isEnabled = isDarkTheme(activity)

@@ -6,10 +6,10 @@ It uses an accessibility service and root to allow you to pick just the apps you
 
 DarQ also provides an option to apply the system dark theme (as well as selectable force dark) only after sunset and before sunrise, protecting your eyes when it's most needed. 
 
-Please read the Frequently Asked Questions sections in the app or here: TODO for more information and some answers to questions
+Please read the Frequently Asked Questions sections in the app or [here](https://github.com/KieronQuinn/DarQ/blob/master/app/src/main/assets/faq.md) for more information and some answers to questions
 
-Download from XDA Labs
+[Download from XDA Labs](https://labs.xda-developers.com/store/app/com.kieronquinn.app.darq)
 
-XDA Thread: TODO
+[XDA Thread](https://forum.xda-developers.com/android/apps-games/app-darq-app-selectable-force-dark-t3944356)
 
 Contains a modified version of the "HK Grotesk" font, modified to have slightly rounder edges and use the secondary "g" instead of its original primary. Licenced under the Open Font Licence, available [here](https://hanken.co/hk-grotesk)
