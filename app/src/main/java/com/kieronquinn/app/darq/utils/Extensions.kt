@@ -16,7 +16,7 @@ import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
 
-const val KEY_FORCE_DARK = "persist.hwui.force_dark"
+const val KEY_FORCE_DARK = "debug.hwui.force_dark"
 
 var Activity.hasCheckedRoot : Boolean
     get() {
