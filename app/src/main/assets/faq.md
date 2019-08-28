@@ -21,7 +21,7 @@ Long answer: Force dark is able to invert light colours to dark, and dark text a
 Sometimes an app launches too quickly for force dark to be applied. You may have luck closing and reopening the app, or opening and closing recent apps. Some apps, such as Google Opinion Rewards, have very basic layouts, and so load the initial page before force dark can be enabled, but any submenus have the dark theme applied. It may be possible to improve the detection and applying time in the future to provide a better experience for these apps, so please be patient and check back for future updates.
 
 ## Which apps look good when force dark is enabled?
-During testing; Snapchat, the Google Play Store and Instagram were found to be usable with force dark enabled. Plenty more will work too, it's up to you to experiment and see what works for you.
+During testing; Snapchat, the Google Play Store and LinkedIn were found to be usable with force dark enabled. Plenty more will work too, it's up to you to experiment and see what works for you.
 
 ## Why does the status bar invert (have black icons) when force dark is enabled? Can it be fixed?
 This appears to be a bug in Android, and as force dark is a developer option, may not be fixed. It may be possible to fix it with DarQ, and this is being investigated
