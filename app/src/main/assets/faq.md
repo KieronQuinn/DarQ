@@ -1,14 +1,14 @@
-## Why does DarQ only work on Android Q?
-Force dark was only added as a (hidden) option on Android Q. If you want to change the theme of apps prior to Q, you may wish to use a Substratum theme.
+## Why does DarQ only work on Android 10?
+Force dark was only added as a (hidden) option on Android 10. If you want to change the theme of apps prior to Android 10, you may wish to use a Substratum theme.
 
-## Why does DarQ need root?
-Since Android Q beta 4, the force dark property (`persist.hwui.force_dark`) is only writable with root. Previously, it was possible to change it with ADB without root, but that is no longer possible. DarQ needs root to change this property, and also uses it to enable and disable the system dark theme without opening the Settings app.
+## Why does DarQ need root or adb access?
+Since the final beta of Android 10, the force dark property (`persist.hwui.force_dark`) is only writable with root or with the `shell` UID (which `adb shell` runs with).
 
 ## Why does DarQ use an Accessibility Service?
 Accessibility services are the quickest and most compatible way to monitor when an app opens and closes, without using hacks like reading the `logcat` (which obviously doesn't work if the device has logs disabled either). If you are worried about DarQ doing anything nefarious using the service, feel free to check the code out on GitHub - and compile the app yourself if you wish - to see what it's doing for yourself.
 
 ## Why does DarQ/force dark need the system dark theme to be enabled?
-For some reason, in Android Q beta 4, a requirement was added to force dark to make it only work when the system dark theme is enabled. A workaround has not been found (and may not even exist) for this, so it is required for DarQ to work too.
+For some reason, in the final beta of Android 10, a requirement was added to force dark to make it only work when the system dark theme is enabled. A workaround has not been found (and may not even exist) for this, so it is required for DarQ to work too.
 
 ## Force Dark makes an app look weird! Can you fix it?
 Short answer: No.

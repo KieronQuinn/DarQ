@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.widget.TextView
 import androidx.navigation.fragment.findNavController
@@ -32,6 +33,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import java.util.*
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
+import com.kieronquinn.app.darq.utils.isRoot
 
 
 class MainFragment : PreferenceFragmentCompat(), ActivityCallbacks {
@@ -57,9 +59,10 @@ class MainFragment : PreferenceFragmentCompat(), ActivityCallbacks {
         val darkModePreference = findPreference<SwitchPreferenceCompat>("switch_dark_mode")
         val forceDarkModePreference = findPreference<SwitchPreferenceCompat>("switch_force_dark_mode")
         val autoDarkPreference = findPreference<SwitchPreferenceCompat>("switch_auto_night_dark")
+        val oxygenOsPreference = findPreference<SwitchPreferenceCompat>("oxygen_os_toggle")
         val whiteListPreference = findPreference<Preference>("preference_whitelist")
         val faqAboutPreference = findPreference<Preference>("preference_faq_about")
-        val testPreference = findPreference<Preference>("test")
+        val debugPreference = findPreference<Preference>("debug")
         (activity as? MainActivity)?.let {
             it.activityCallbacks = this
             darkModePreference?.isChecked = isDarkTheme(it)
@@ -76,23 +79,28 @@ class MainFragment : PreferenceFragmentCompat(), ActivityCallbacks {
                 findNavController().navigate(R.id.action_mainFragment_to_appsFragment)
                 true
             }
-            testPreference?.isVisible = BuildConfig.DEBUG
-            testPreference?.setOnPreferenceClickListener {
-                activity?.let {activity ->
-                    val isEnabled = isDarkTheme(activity)
-                    val intent = Intent()
-                    intent.action = DarqBackgroundService.BROADCAST_TEST
-                    intent.`package` = activity.packageName
-                    activity.sendBroadcast(intent)
+            debugPreference?.run {
+                isVisible = BuildConfig.DEBUG
+                setOnPreferenceClickListener {
+                    activity?.let {activity ->
+                        val isEnabled = isDarkTheme(activity)
+                        val intent = Intent()
+                        intent.action = DarqBackgroundService.BROADCAST_TEST
+                        intent.`package` = activity.packageName
+                        activity.sendBroadcast(intent)
+                    }
+                    true
                 }
-                true
+                summary = "Running with root: $isRoot"
             }
             autoDarkPreference?.onPreferenceChangeListener = onAutoDarkCheckedChangeListener
             faqAboutPreference?.setOnPreferenceClickListener { preference ->
                 showFaqAbout(preference as Preference)
                 true
             }
+            oxygenOsPreference?.isVisible = Build.MANUFACTURER == "OnePlus"
         }
+
     }
 
     private fun toggleDarkMode() {

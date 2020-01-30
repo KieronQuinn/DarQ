@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.pm.ApplicationInfo
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -21,16 +22,17 @@ import androidx.navigation.findNavController
 import com.kieronquinn.app.darq.fragments.BottomSheetFragment
 import com.kieronquinn.app.darq.holders.App
 import com.kieronquinn.app.darq.interfaces.ActivityCallbacks
+import com.kieronquinn.app.darq.root.DarqIPCReceiver
 import com.kieronquinn.app.darq.services.DarqBackgroundService
 import com.kieronquinn.app.darq.services.DarqBackgroundService.Companion.BROADCAST_PING
 import com.kieronquinn.app.darq.services.DarqBackgroundService.Companion.BROADCAST_PONG
 import com.kieronquinn.app.darq.utils.*
-import eu.chainfire.libsuperuser.Shell
+import com.topjohnwu.superuser.Shell
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.include_dark_mode_warning.*
 import kotlinx.coroutines.*
-import org.shredzone.commons.suncalc.SunTimes
-import java.util.*
+import java.io.File
+import java.nio.charset.Charset
 import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
@@ -225,7 +227,7 @@ class MainActivity : AppCompatActivity() {
             var isRooted = false
             loading_text.text = getString(R.string.checking_root)
             withContext(Dispatchers.Default) {
-                isRooted = Shell.SU.available()
+                isRooted = Shell.rootAccess()
             }
             loading_text.text = getString(R.string.loading_apps)
             withContext(Dispatchers.Default){
@@ -235,11 +237,23 @@ class MainActivity : AppCompatActivity() {
                     activityCallbacks?.onEnabledAppListLoaded(it)
                 }
             }
+            Log.d("DarQ", "isRooted $isRooted")
             if (isRooted) {
+                launchScript()
                 checkServiceRunning()
                 hasCheckedRoot = true
             }else{
-                showNoRootSheet()
+                generateShellScript()
+                checkServiceRunning()
+            }
+        }
+    }
+
+    private fun launchScript(){
+        uiScope.launch {
+            withContext(Dispatchers.Default){
+                val command = DarqIPCReceiver.getLaunchScript(this@MainActivity)
+                runRootCommand(command)
             }
         }
     }
@@ -253,12 +267,14 @@ class MainActivity : AppCompatActivity() {
         }
 
         var hasReceived = false
+        var isIpcEnabled = false
 
         //Register a receiver to wait for the response
         registerReceiver(object : BroadcastReceiver() {
-            override fun onReceive(p0: Context?, p1: Intent?) {
+            override fun onReceive(p0: Context?, intent: Intent?) {
                 hasReceived = true
-                isWaitingForDismiss = true
+                isIpcEnabled = intent?.getBooleanExtra(DarqBackgroundService.KEY_IPC_FOUND, false) ?: false
+                if(isIpcEnabled) isWaitingForDismiss = true
                 unregisterReceiver(this)
             }
         }, IntentFilter(BROADCAST_PONG))
@@ -267,6 +283,13 @@ class MainActivity : AppCompatActivity() {
         uiScope.launch {
             withContext(Dispatchers.Default) {
                 delay(5000L)
+            }
+            if (!isIpcEnabled){
+               if(isRoot){
+                   showNoServiceRootSheet()
+               }else{
+                   showNoServiceSheet()
+               }
             }
             if (!hasReceived) {
                 showAccessibilityRunningSheet()
@@ -279,15 +302,31 @@ class MainActivity : AppCompatActivity() {
         sendBroadcast(intent)
     }
 
-    private fun showNoRootSheet(){
+    private fun showNoServiceSheet(){
         isWaitingToPause = true
         val bottomSheet = BottomSheetFragment()
-        bottomSheet.layout = R.layout.bottom_sheet_no_root
+        bottomSheet.layout = R.layout.bottom_sheet_no_service
+        bottomSheet.cancelListener = {
+            finish()
+            true
+        }
+        bottomSheet.okLabel = R.string.bottom_sheet_no_service_steps
         bottomSheet.okListener = {
             finish()
             true
         }
-        bottomSheet.show(supportFragmentManager, "bs_no_root")
+        bottomSheet.show(supportFragmentManager, "bs_no_service")
+    }
+
+    private fun showNoServiceRootSheet(){
+        isWaitingToPause = true
+        val bottomSheet = BottomSheetFragment()
+        bottomSheet.layout = R.layout.bottom_sheet_no_service_root
+        bottomSheet.okListener = {
+            finish()
+            true
+        }
+        bottomSheet.show(supportFragmentManager, "bs_no_service_root")
     }
 
     private fun showAccessibilitySheet(){
@@ -322,6 +361,25 @@ class MainActivity : AppCompatActivity() {
             false
         }
         bottomSheet.show(supportFragmentManager, "bs_accessibility_not_running")
+    }
+
+    private fun generateShellScript(){
+        val rootCommand = DarqIPCReceiver.getLaunchShellScript(this)
+        val file = File(getExternalFilesDir(null), "script.sh")
+        file.parentFile?.mkdirs()
+        file.writer(Charset.defaultCharset()).buffered().run {
+            write("#!/system/bin/sh")
+            newLine()
+            for((count, line) in rootCommand.withIndex()){
+                write(line)
+                if(count < rootCommand.size - 1) {
+                    newLine()
+                }else{
+                    write(" &")
+                }
+            }
+            close()
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

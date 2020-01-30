@@ -21,33 +21,33 @@ import ru.noties.markwon.core.MarkwonTheme
 
 class FaqFragment : Fragment() {
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_faq, container, false)
-    }
+	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+		return inflater.inflate(R.layout.fragment_faq, container, false)
+	}
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        activity?.let { activity ->
-            val typeface = ResourcesCompat.getFont(activity, R.font.hkgrotesk)
-            val markwon = Markwon.builder(activity).usePlugin(object: AbstractMarkwonPlugin() {
-                override fun configureTheme(builder: MarkwonTheme.Builder) {
-                    typeface?.let {
-                        builder.headingTypeface(it)
-                        builder.headingBreakHeight(0)
-                    }
-                }
+	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+		super.onViewCreated(view, savedInstanceState)
+		activity?.let { activity ->
+			val typeface = ResourcesCompat.getFont(activity, R.font.hkgrotesk)
+			val markwon = Markwon.builder(activity).usePlugin(object: AbstractMarkwonPlugin() {
+				override fun configureTheme(builder: MarkwonTheme.Builder) {
+					typeface?.let {
+						builder.headingTypeface(it)
+						builder.headingBreakHeight(0)
+					}
+				}
 
-                override fun configureSpansFactory(builder: MarkwonSpansFactory.Builder) {
-                    val origin = builder.requireFactory(Heading::class.java)
-                    builder.setFactory(Heading::class.java) { configuration, props ->
-                        arrayOf(origin.getSpans(configuration, props), ForegroundColorSpan(activity.getColorResCompat(android.R.attr.textColorPrimary)))
-                    }
-                }
-            }).build()
-            val markdown = activity.assets.open("faq.md").bufferedReader().use { it.readText() }
-            markwon.setMarkdown(view.markdown, markdown)
-        }
+				override fun configureSpansFactory(builder: MarkwonSpansFactory.Builder) {
+					val origin = builder.requireFactory(Heading::class.java)
+					builder.setFactory(Heading::class.java) { configuration, props ->
+						arrayOf(origin.getSpans(configuration, props), ForegroundColorSpan(activity.getColorResCompat(android.R.attr.textColorPrimary)))
+					}
+				}
+			}).build()
+			val markdown = activity.assets.open("faq.md").bufferedReader().use { it.readText() }
+			markwon.setMarkdown(view.markdown, markdown)
+		}
 
-    }
+	}
 
 }

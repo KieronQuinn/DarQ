@@ -8,24 +8,26 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.location.Criteria
+import android.location.LocationManager
 import android.util.Log
 import android.view.accessibility.AccessibilityEvent
 import com.kieronquinn.app.darq.BuildConfig
+import com.kieronquinn.app.darq.DarqApplication
 import com.kieronquinn.app.darq.IDarqIPC
+import com.kieronquinn.app.darq.receivers.SunriseSunsetReceiver
 import com.kieronquinn.app.darq.root.DarqIPCReceiver
 import com.kieronquinn.app.darq.utils.PreferenceUtils
+import com.kieronquinn.app.darq.utils.TimeZoneUtils
+import com.kieronquinn.app.darq.utils.runRootCommand
 import com.kieronquinn.app.darq.utils.sendBroadcast
 import eu.chainfire.librootjava.RootIPCReceiver
-import eu.chainfire.librootjava.RootJava
 import eu.chainfire.libsuperuser.Shell
+import kotlinx.coroutines.*
 import org.shredzone.commons.suncalc.SunTimes
 import java.util.*
-import android.location.LocationManager
-import com.kieronquinn.app.darq.receivers.SunriseSunsetReceiver
-import com.kieronquinn.app.darq.utils.TimeZoneUtils
-import kotlinx.coroutines.*
 
 
 class DarqBackgroundService : AccessibilityService() {
@@ -49,6 +51,7 @@ class DarqBackgroundService : AccessibilityService() {
         const val EXTRA_FORCE_STOP = "${BuildConfig.APPLICATION_ID}.EXTRA_FORCE_STOP"
         const val EXTRA_ACTION = "${BuildConfig.APPLICATION_ID}.EXTRA_ACTION"
         const val KEY_ENABLED = "enabled"
+        const val KEY_IPC_FOUND = "ipc_found"
     }
 
     private val enabledApps = arrayListOf<String>()
@@ -88,7 +91,9 @@ class DarqBackgroundService : AccessibilityService() {
         override fun onReceive(context: Context?, intent: Intent?) {
             Log.d(TAG, "onReceive ${intent?.action}")
             when (intent?.action) {
-                BROADCAST_PING -> sendBroadcast(BROADCAST_PONG)
+                BROADCAST_PING -> {
+                    sendBroadcast(BROADCAST_PONG, Pair(KEY_IPC_FOUND, ipc != null))
+                }
                 BROADCAST_SET_DARK -> setDark(intent.getBooleanExtra(KEY_ENABLED, false))
                 BROADCAST_SET_FORCE_DARK -> setForceDark(intent.getBooleanExtra(KEY_ENABLED, false))
                 REFRESH -> refreshEnabledApps(intent.getStringExtra(EXTRA_FORCE_STOP))
@@ -140,6 +145,7 @@ class DarqBackgroundService : AccessibilityService() {
         override fun onConnect(ipc: IDarqIPC?) {
             Log.d(TAG, "Connected")
             this@DarqBackgroundService.ipc = ipc
+            (application as? DarqApplication)?.isRoot = ipc?.isRoot ?: false
         }
 
         override fun onDisconnect(ipc: IDarqIPC?) {
@@ -210,29 +216,11 @@ class DarqBackgroundService : AccessibilityService() {
     private fun checkRootAndSecure() {
         val isRooted: Boolean = Shell.SU.available()
         if (isRooted) {
-            val rootCommand = RootJava.getLaunchScript(
-                this@DarqBackgroundService,
-                DarqIPCReceiver::class.java,
-                null,
-                null,
-                null,
-                BuildConfig.APPLICATION_ID + ":root"
-            )
-            Shell.Builder()
-                .useSU()
-                .open().run {
-                    addCommand(rootCommand, 0, object : Shell.OnCommandLineListener {
-                        override fun onLine(p0: String?) {
-                            Log.d(TAG, p0)
-                        }
-
-                        override fun onCommandResult(p0: Int, p1: Int) {
-                            Log.d(TAG, "Result $p0 $p1")
-                        }
-                    })
-                }
-            darqIPCReceiver.setContext(this@DarqBackgroundService)
+            val rootCommand = DarqIPCReceiver.getLaunchScript(this)
+            runRootCommand(rootCommand)
+            darqIPCReceiver.setContext(this)
         } else {
+            darqIPCReceiver.setContext(this)
             //TODO no root screen
         }
     }
@@ -270,7 +258,7 @@ class DarqBackgroundService : AccessibilityService() {
     private fun enableForceDark() {
         Log.d(TAG, "Enabling force dark pre")
         if (isForceDarkTheme) return
-        Log.d(TAG, "Enabling force dark")
+        Log.d(TAG, "Enabling force dark ipc ${ipc != null}")
         ipc?.setForceDarkEnabled(true)
         ipc?.pokeServices()
         isForceDarkTheme = true
