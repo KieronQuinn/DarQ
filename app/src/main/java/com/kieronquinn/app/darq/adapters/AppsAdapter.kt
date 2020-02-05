@@ -16,7 +16,7 @@ import android.widget.CheckBox
 import com.squareup.picasso.Picasso
 
 
-class AppsAdapter(context: Context, private val apps : List<App>, private val enabledApps: List<String>, private val checkedChangeListener : (packageName: String, isChecked: Boolean, checkbox: CheckBox) -> Unit) : RecyclerView.Adapter<AppsAdapter.ViewHolder>() {
+class AppsAdapter(context: Context, var apps : List<App>, private val enabledApps: List<String>, private val checkedChangeListener : (packageName: String, isChecked: Boolean, checkbox: CheckBox) -> Unit) : RecyclerView.Adapter<AppsAdapter.ViewHolder>() {
 
     private val layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 

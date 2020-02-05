@@ -1,4 +1,4 @@
-package com.kieronquinn.app.darq
+package com.kieronquinn.app.darq.activities
 
 import android.animation.Animator
 import android.content.BroadcastReceiver
@@ -17,8 +17,10 @@ import android.view.View
 import android.view.ViewAnimationUtils
 import android.view.WindowManager
 import android.widget.FrameLayout
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
+import com.kieronquinn.app.darq.R
 import com.kieronquinn.app.darq.fragments.BottomSheetFragment
 import com.kieronquinn.app.darq.holders.App
 import com.kieronquinn.app.darq.interfaces.ActivityCallbacks
@@ -33,7 +35,6 @@ import kotlinx.android.synthetic.main.include_dark_mode_warning.*
 import kotlinx.coroutines.*
 import java.io.File
 import java.nio.charset.Charset
-import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
 
@@ -75,6 +76,7 @@ class MainActivity : AppCompatActivity() {
         checkRootAndSecure()
         setupLottieListener()
         setupNavController()
+        dark_mode_warning.visibility = if(isDarkTheme) View.GONE else View.VISIBLE
     }
 
     private fun setupNavController() {
@@ -90,6 +92,18 @@ class MainActivity : AppCompatActivity() {
                 R.id.mainFragment -> {
                     home.visibility = View.GONE
                 }
+            }
+            val dots = findViewById<ImageView>(R.id.menu)
+            if(destination.id != R.id.mainFragment){
+                dark_mode_warning.visibility = View.GONE
+            }else{
+                dots.visibility = View.GONE
+                dark_mode_warning.visibility = if(isDarkTheme) View.GONE else View.VISIBLE
+            }
+            if(destination.id == R.id.appsFragment){
+                toolbar.elevation = 0f
+            }else{
+                toolbar.elevation = resources.getDimension(R.dimen.toolbar_elevation)
             }
             toolbar_title.text = destination.label
         }
@@ -117,7 +131,7 @@ class MainActivity : AppCompatActivity() {
                             tv.data,
                             resources.displayMetrics
                         )
-                        MainActivity.actionBarHeight = actionBarHeight
+                        Companion.actionBarHeight = actionBarHeight
                         setupStatusPadding()
                     }
                 }
@@ -139,6 +153,7 @@ class MainActivity : AppCompatActivity() {
         loading_text.setTextColor(Color.WHITE)
         toolbar_title.setTextColor(Color.WHITE)
         home.imageTintList = ColorStateList.valueOf(Color.WHITE)
+        menu.imageTintList = ColorStateList.valueOf(Color.WHITE)
         window.decorView.systemUiVisibility = 0
     }
 
@@ -164,6 +179,7 @@ class MainActivity : AppCompatActivity() {
                         delay((anim.duration * 0.9).toLong())
                         toolbar_title.setTextColor(Color.WHITE)
                         home.imageTintList = ColorStateList.valueOf(Color.WHITE)
+                        menu.imageTintList = ColorStateList.valueOf(Color.WHITE)
                         delay((anim.duration * 0.05).toLong())
                         window.decorView.systemUiVisibility = 0
                     })?.start()
@@ -191,6 +207,7 @@ class MainActivity : AppCompatActivity() {
                         delay((anim.duration * 0.9).toLong())
                         toolbar_title.setTextColor(Color.BLACK)
                         home.imageTintList = ColorStateList.valueOf(Color.BLACK)
+                        menu.imageTintList = ColorStateList.valueOf(Color.BLACK)
                         delay((anim.duration * 0.05).toLong())
                         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR or
                                 View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
@@ -212,11 +229,10 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         setupStatusPadding()
-        dark_mode_warning.visibility = if(isDarkTheme) View.GONE else View.VISIBLE
     }
 
     private fun setupStatusPadding() {
-        if (MainActivity.actionBarHeight != null && MainActivity.statusBarHeight != null) {
+        if (actionBarHeight != null && statusBarHeight != null) {
             toolbar?.layoutParams?.height = actionBarHeight!! + statusBarHeight!!
             fragment_container.setPadding(0, statusBarHeight!!, 0, 0)
         }
@@ -305,34 +321,42 @@ class MainActivity : AppCompatActivity() {
     private fun showNoServiceSheet(){
         isWaitingToPause = true
         val bottomSheet = BottomSheetFragment()
-        bottomSheet.layout = R.layout.bottom_sheet_no_service
+        bottomSheet.layout =
+            R.layout.bottom_sheet_no_service
         bottomSheet.cancelListener = {
             finish()
             true
         }
-        bottomSheet.okLabel = R.string.bottom_sheet_no_service_steps
+        bottomSheet.okLabel =
+            R.string.bottom_sheet_no_service_steps
         bottomSheet.okListener = {
-            finish()
-            true
+            startActivity(Intent(this, ModalFaqActivity::class.java))
+            false
         }
-        bottomSheet.show(supportFragmentManager, "bs_no_service")
+        if(!supportFragmentManager.isDestroyed) {
+            bottomSheet.show(supportFragmentManager, "bs_no_service")
+        }
     }
 
     private fun showNoServiceRootSheet(){
         isWaitingToPause = true
         val bottomSheet = BottomSheetFragment()
-        bottomSheet.layout = R.layout.bottom_sheet_no_service_root
+        bottomSheet.layout =
+            R.layout.bottom_sheet_no_service_root
         bottomSheet.okListener = {
             finish()
             true
         }
-        bottomSheet.show(supportFragmentManager, "bs_no_service_root")
+        if(!supportFragmentManager.isDestroyed) {
+            bottomSheet.show(supportFragmentManager, "bs_no_service_root")
+        }
     }
 
     private fun showAccessibilitySheet(){
         isWaitingToPause = true
         val bottomSheet = BottomSheetFragment()
-        bottomSheet.layout = R.layout.bottom_sheet_accessibility
+        bottomSheet.layout =
+            R.layout.bottom_sheet_accessibility
         bottomSheet.cancelListener = {
             finish()
             true
@@ -340,16 +364,22 @@ class MainActivity : AppCompatActivity() {
         bottomSheet.okListener = {
             currentBottomSheet = bottomSheet
             val intent = Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)
-            startActivityForResult(intent, INTENT_RELOAD)
+            startActivityForResult(
+                intent,
+                INTENT_RELOAD
+            )
             false
         }
-        bottomSheet.show(supportFragmentManager, "bs_accessibility")
+        if(!supportFragmentManager.isDestroyed) {
+            bottomSheet.show(supportFragmentManager, "bs_accessibility")
+        }
     }
 
     private fun showAccessibilityRunningSheet(){
         isWaitingToPause = true
         val bottomSheet = BottomSheetFragment()
-        bottomSheet.layout = R.layout.bottom_sheet_accessibility_not_running
+        bottomSheet.layout =
+            R.layout.bottom_sheet_accessibility_not_running
         bottomSheet.cancelListener = {
             finish()
             true
@@ -357,10 +387,14 @@ class MainActivity : AppCompatActivity() {
         bottomSheet.okListener = {
             currentBottomSheet = bottomSheet
             val intent = Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)
-            startActivityForResult(intent, INTENT_RELOAD)
+            startActivityForResult(intent,
+                INTENT_RELOAD
+            )
             false
         }
-        bottomSheet.show(supportFragmentManager, "bs_accessibility_not_running")
+        if(!supportFragmentManager.isDestroyed) {
+            bottomSheet.show(supportFragmentManager, "bs_accessibility_not_running")
+        }
     }
 
     private fun generateShellScript(){
@@ -396,7 +430,9 @@ class MainActivity : AppCompatActivity() {
         lottie.pauseAnimation()
         loading_text.text = getString(R.string.loading)
         root.background =
-                if (isDarkTheme) ColorDrawable(Color.BLACK) else ColorDrawable(getColor(R.color.windowBackground))
+                if (isDarkTheme) ColorDrawable(Color.BLACK) else ColorDrawable(getColor(
+                    R.color.windowBackground
+                ))
         createCircularAnimation(isEnd, fragment_container, {
             fragment_container.visibility = View.VISIBLE
         }, {
@@ -408,6 +444,7 @@ class MainActivity : AppCompatActivity() {
             delay((anim.duration * 0.9).toLong())
             toolbar_title.setTextColor(color)
             home.imageTintList = ColorStateList.valueOf(color)
+            menu.imageTintList = ColorStateList.valueOf(color)
             delay((anim.duration * 0.05).toLong())
             window.decorView.systemUiVisibility =
                     if (isDarkTheme) 0 else View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR or
@@ -427,7 +464,7 @@ class MainActivity : AppCompatActivity() {
     private fun loadApps() {
         allApps.clear()
         allApps.addAll(packageManager.getInstalledPackages(0).map {
-            App(it.packageName, packageManager.getApplicationLabel(it.applicationInfo))
+            App(it.packageName, packageManager.getApplicationLabel(it.applicationInfo), it.applicationInfo.flags.and(ApplicationInfo.FLAG_SYSTEM) != 0)
         })
         allApps.sortWith(compareBy{it.appName.toString().toLowerCase()})
         activityCallbacks?.onAppListLoaded(allApps)

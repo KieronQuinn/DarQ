@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">DarQ</string>
-    <string name="accessibility_service_description">DarQ Accessibility Service\n\nRequired for the app to work, allows it to monitor apps running and enable/disable the force-dark setting accordingly. Enable it and return the app to continue.\n\nPLEASE NOTE:\nAs of Android 10, when enabling an accessibility service, no matter how minor its access, you will be warned that the service can read the screen and act on behalf of you, and that it is not appropriate for most apps. This is normal, please just tap \'Ok\'. If you wish to view what DarQ is doing (and more importantly, not doing) programmatically, you can view its source on GitHub.</string>
+    <string name="accessibility_service_description">DarQ Accessibility Service\n\nRequired for the app to work, allows it to monitor apps running and enable/disable the force-dark setting accordingly. Enable it and return the app to continue.\n\nPLEASE NOTE:\nAs of Android 10, when enabling an accessibility service, no matter how minor its access, you will be warned that the service can read the screen and act on behalf of you, and that it is not appropriate for most apps. This is normal, please just tap \'Ok\'. If you wish to view what DarQ is doing (and more importantly, not doing) programmatically, you can view its source on GitHub.\n\nNote for non-root users:\nEnabling or disabling this toggle will require you to run the script from your computer again.</string>
     <string name="setting_dark_mode_title">Enable Dark Theme</string>
     <string name="setting_dark_mode_desc">Toggle the main system dark theme</string>
     <string name="setting_force_dark_mode_title">Force Dark Theme</string>
@@ -12,6 +12,8 @@
     <string name="setting_oxygen_force_desc">Enable the Oxygen OS \"Entire World\" force dark (applies to most apps)</string>
     <string name="setting_whitelist_title">Enabled Apps</string>
     <string name="setting_faq_about_toggle">FAQ &amp; About</string>
+    <string name="setting_non_root_faq">Non-Root Instructions &amp; FAQ</string>
+    <string name="setting_non_root_faq_desc">View the instructions and FAQ on running DarQ without root</string>
     <string name="setting_faq_title">Frequently Asked Questions</string>
     <string name="setting_xda_thread_title">XDA Thread</string>
     <string name="setting_twitter_title">Follow me on Twitter</string>
@@ -39,4 +41,7 @@
     <string name="bottom_sheet_auto_dark_location">Location</string>
     <string name="dark_mode_warning">Force dark requires the system dark theme to be enabled to work. Please enable it below to see changes in apps.</string>
     <string name="permission_failed">Permission denied, please grant manually in your device\'s app settings</string>
+    <string name="show_system_apps">Show system apps</string>
+    <string name="search">Search</string>
+    <string name="nothing_found">Nothing found</string>
 </resources>

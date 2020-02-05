@@ -146,6 +146,7 @@ class DarqBackgroundService : AccessibilityService() {
             Log.d(TAG, "Connected")
             this@DarqBackgroundService.ipc = ipc
             (application as? DarqApplication)?.isRoot = ipc?.isRoot ?: false
+            (application as? DarqApplication)?.uid = ipc?.uid
         }
 
         override fun onDisconnect(ipc: IDarqIPC?) {

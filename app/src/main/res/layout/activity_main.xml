@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
     android:id="@+id/root"
-    tools:context=".MainActivity">
+    tools:context=".activities.MainActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -62,6 +62,19 @@
                 android:id="@+id/home"
                 android:tint="@android:color/black"
                 android:src="?attr/homeAsUpIndicator"
+                android:padding="@dimen/activity_padding"
+                android:foreground="@drawable/rounded_ripple"
+                android:clickable="true"
+                android:focusable="true"
+                android:elevation="4dp"/>
+
+            <ImageView
+                android:layout_width="?actionBarSize"
+                android:layout_height="?actionBarSize"
+                android:layout_gravity="bottom|end"
+                android:id="@+id/menu"
+                android:tint="@android:color/black"
+                android:src="@drawable/ic_dots"
                 android:padding="@dimen/activity_padding"
                 android:foreground="@drawable/rounded_ripple"
                 android:clickable="true"
@@ -132,6 +145,7 @@
         android:fitsSystemWindows="false"
         android:layout_marginTop="?actionBarSize"
         android:orientation="vertical"
+        android:animateLayoutChanges="true"
         android:visibility="gone">
 
         <include layout="@layout/include_dark_mode_warning"/>

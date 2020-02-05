@@ -57,21 +57,24 @@ var Fragment.isRoot : Boolean
         (activity?.application as? DarqApplication)?.isRoot = value
     }
 
-fun getIsDarkTheme(uiModeManager: UiModeManager?): Boolean {
-    return uiModeManager?.currentModeType == UiModeManager.MODE_NIGHT_YES
-}
+var Activity.uid : String?
+    get() {
+        return (application as? DarqApplication)?.uid
+    }
+    set(value) {
+        (application as? DarqApplication)?.uid = value
+    }
+
+var Fragment.uid : String?
+    get() {
+        return (activity?.application as? DarqApplication)?.uid
+    }
+    set(value) {
+        (activity?.application as? DarqApplication)?.uid = value
+    }
 
 fun getIsForceDarkTheme() : Boolean {
     return getSystemProperty(KEY_FORCE_DARK) == "true"
-}
-
-fun View.fadeOut(){
-    AlphaAnimation(1f, 0f).run {
-        duration = 1000L
-        interpolator = AccelerateInterpolator()
-        fillAfter = true
-        this@fadeOut.startAnimation(this)
-    }
 }
 
 fun runRootCommand(command: String) {

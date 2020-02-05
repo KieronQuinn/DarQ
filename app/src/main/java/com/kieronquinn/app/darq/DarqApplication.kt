@@ -3,11 +3,8 @@ package com.kieronquinn.app.darq
 import android.app.Application
 import com.kieronquinn.app.darq.utils.AppIconRequestHandler
 import com.squareup.picasso.Picasso
-import com.topjohnwu.superuser.Shell.Config.setTimeout
-import com.topjohnwu.superuser.Shell.Config.verboseLogging
+import com.topjohnwu.superuser.Shell.Config.*
 import com.topjohnwu.superuser.Shell.FLAG_REDIRECT_STDERR
-import com.topjohnwu.superuser.Shell.Config.setFlags
-import com.topjohnwu.superuser.Shell
 
 
 class DarqApplication : Application() {
@@ -23,6 +20,7 @@ class DarqApplication : Application() {
 
     var hasCheckedRoot = false
     var isRoot = false
+    var uid: String? = null
 
     override fun onCreate() {
         super.onCreate()

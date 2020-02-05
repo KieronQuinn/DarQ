@@ -156,8 +156,14 @@ public class DarqIPCReceiver {
 
             @Override
             public boolean isRoot(){
-                Log.d("DarQ", "UID " + ExtensionsKt.getUID());
                 return ExtensionsKt.getUID() == 0;
+            }
+
+            @Override
+            public String getUid(){
+                String uidString = Shell.SH.run("whoami").toString();
+                Log.d("DarQ", "Running as " + uidString);
+                return uidString;
             }
         };
 

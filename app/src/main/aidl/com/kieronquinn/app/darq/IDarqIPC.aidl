@@ -15,4 +15,6 @@ interface IDarqIPC {
     void hookService();
 
     boolean isRoot();
+
+    String getUid();
 }

@@ -29,6 +29,11 @@
         android:title="@string/setting_whitelist_title"
         android:summary="@plurals/setting_whitelist_desc" />
     <com.kieronquinn.app.darq.preferences.Preference
+        android:key="preference_non_root_faq"
+        android:icon="@drawable/ic_laptop"
+        android:title="@string/setting_non_root_faq"
+        android:summary="@string/setting_non_root_faq_desc" />
+    <com.kieronquinn.app.darq.preferences.Preference
         android:defaultValue="false"
         android:key="debug"
         android:title="Debug"

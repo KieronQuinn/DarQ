@@ -1,7 +1,6 @@
 package com.kieronquinn.app.darq.fragments
 
 import android.Manifest
-import android.app.UiModeManager
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -9,6 +8,8 @@ import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.util.Log
 import android.widget.TextView
 import androidx.navigation.fragment.findNavController
 import androidx.preference.Preference.OnPreferenceClickListener
@@ -17,7 +18,7 @@ import androidx.preference.SwitchPreferenceCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.kieronquinn.app.darq.BuildConfig
-import com.kieronquinn.app.darq.MainActivity
+import com.kieronquinn.app.darq.activities.MainActivity
 import com.kieronquinn.app.darq.R
 import com.kieronquinn.app.darq.holders.App
 import com.kieronquinn.app.darq.interfaces.ActivityCallbacks
@@ -25,15 +26,13 @@ import com.kieronquinn.app.darq.preferences.Preference
 import com.kieronquinn.app.darq.preferences.SwitchPreference
 import com.kieronquinn.app.darq.services.DarqBackgroundService
 import com.kieronquinn.app.darq.services.DarqBackgroundService.Companion.BROADCAST_SET_FORCE_DARK_SUCCESS
-import com.kieronquinn.app.darq.utils.Links
-import com.kieronquinn.app.darq.utils.getIsForceDarkTheme
-import com.kieronquinn.app.darq.utils.isDarkTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import java.util.*
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
-import com.kieronquinn.app.darq.utils.isRoot
+import com.kieronquinn.app.darq.activities.ModalFaqActivity
+import com.kieronquinn.app.darq.utils.*
 
 
 class MainFragment : PreferenceFragmentCompat(), ActivityCallbacks {
@@ -63,6 +62,7 @@ class MainFragment : PreferenceFragmentCompat(), ActivityCallbacks {
         val whiteListPreference = findPreference<Preference>("preference_whitelist")
         val faqAboutPreference = findPreference<Preference>("preference_faq_about")
         val debugPreference = findPreference<Preference>("debug")
+        val nonRootFaqPreference = findPreference<Preference>("preference_non_root_faq")
         (activity as? MainActivity)?.let {
             it.activityCallbacks = this
             darkModePreference?.isChecked = isDarkTheme(it)
@@ -82,7 +82,7 @@ class MainFragment : PreferenceFragmentCompat(), ActivityCallbacks {
             debugPreference?.run {
                 isVisible = BuildConfig.DEBUG
                 setOnPreferenceClickListener {
-                    activity?.let {activity ->
+                    activity?.let { activity ->
                         val isEnabled = isDarkTheme(activity)
                         val intent = Intent()
                         intent.action = DarqBackgroundService.BROADCAST_TEST
@@ -91,7 +91,13 @@ class MainFragment : PreferenceFragmentCompat(), ActivityCallbacks {
                     }
                     true
                 }
-                summary = "Running with root: $isRoot"
+            }
+            if(BuildConfig.DEBUG){
+                Handler().postDelayed({
+                    activity?.runOnUiThread {
+                        debugPreference?.summary = "Running as $uid (isRoot $isRoot)"
+                    }
+                },1000)
             }
             autoDarkPreference?.onPreferenceChangeListener = onAutoDarkCheckedChangeListener
             faqAboutPreference?.setOnPreferenceClickListener { preference ->
@@ -99,6 +105,13 @@ class MainFragment : PreferenceFragmentCompat(), ActivityCallbacks {
                 true
             }
             oxygenOsPreference?.isVisible = Build.MANUFACTURER == "OnePlus"
+            nonRootFaqPreference?.isVisible = !isRoot
+            if(!isRoot){
+                nonRootFaqPreference?.setOnPreferenceClickListener {
+                    startActivity(Intent(activity, ModalFaqActivity::class.java))
+                    true
+                }
+            }
         }
 
     }
@@ -220,7 +233,9 @@ class MainFragment : PreferenceFragmentCompat(), ActivityCallbacks {
 
     private fun refreshEnabledApps(pNames: List<String>){
         val preference = findPreference<Preference>("preference_whitelist")
-        preference?.summary = resources.getQuantityString(R.plurals.setting_whitelist_desc, pNames.size, pNames.size)
+        context?.let {
+            preference?.summary = resources.getQuantityString(R.plurals.setting_whitelist_desc, pNames.size, pNames.size)
+        }
     }
 
     override fun onResume() {
