@@ -4,8 +4,6 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import com.kieronquinn.app.darq.BuildConfig
-import com.kieronquinn.app.darq.MainActivity
-import com.kieronquinn.app.darq.holders.App
 import org.json.JSONArray
 
 class PreferenceUtils(context: Context) {

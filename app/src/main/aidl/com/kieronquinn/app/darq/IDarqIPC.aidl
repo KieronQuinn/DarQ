@@ -13,4 +13,8 @@ interface IDarqIPC {
     void forceStopApp(String app);
 
     void hookService();
+
+    boolean isRoot();
+
+    String getUid();
 }

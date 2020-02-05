@@ -8,7 +8,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.AppCompat.Large.Darq"
-        android:text="@string/bottom_sheet_no_root_title"
+        android:text="@string/bottom_sheet_no_service_root_title"
         android:paddingTop="@dimen/activity_padding"
         android:paddingStart="@dimen/activity_padding"
         android:paddingEnd="@dimen/activity_padding" />
@@ -20,7 +20,7 @@
         android:paddingStart="@dimen/activity_padding"
         android:paddingEnd="@dimen/activity_padding"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        android:text="@string/bottom_sheet_no_root_desc"/>
+        android:text="@string/bottom_sheet_no_service_root_desc"/>
 
     <include layout="@layout/bottom_sheet_buttons" />
 

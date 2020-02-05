@@ -9,6 +9,7 @@
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:windowLightNavigationBar">true</item>
         <item name="toolbarColor">@android:color/white</item>
+        <item name="searchBoxBackground">@color/search_box_background_light</item>
     </style>
 
     <style name="AppTheme.Dark" parent="Theme.MaterialComponents.NoActionBar">
@@ -19,6 +20,7 @@
         <item name="android:windowLightStatusBar">false</item>
         <item name="android:windowLightNavigationBar">false</item>
         <item name="toolbarColor">@color/toolbar_dark</item>
+        <item name="searchBoxBackground">@color/search_box_background_dark</item>
     </style>
 
     <style name="TextAppearance.AppCompat.Small.Darq" parent="TextAppearance.AppCompat.Small">
