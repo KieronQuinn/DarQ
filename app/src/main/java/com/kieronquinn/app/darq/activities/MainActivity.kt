@@ -1,10 +1,11 @@
-package com.kieronquinn.app.darq
+package com.kieronquinn.app.darq.activities
 
 import android.animation.Animator
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.pm.ApplicationInfo
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -16,22 +17,24 @@ import android.view.View
 import android.view.ViewAnimationUtils
 import android.view.WindowManager
 import android.widget.FrameLayout
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
+import com.kieronquinn.app.darq.R
 import com.kieronquinn.app.darq.fragments.BottomSheetFragment
 import com.kieronquinn.app.darq.holders.App
 import com.kieronquinn.app.darq.interfaces.ActivityCallbacks
+import com.kieronquinn.app.darq.root.DarqIPCReceiver
 import com.kieronquinn.app.darq.services.DarqBackgroundService
 import com.kieronquinn.app.darq.services.DarqBackgroundService.Companion.BROADCAST_PING
 import com.kieronquinn.app.darq.services.DarqBackgroundService.Companion.BROADCAST_PONG
 import com.kieronquinn.app.darq.utils.*
-import eu.chainfire.libsuperuser.Shell
+import com.topjohnwu.superuser.Shell
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.include_dark_mode_warning.*
 import kotlinx.coroutines.*
-import org.shredzone.commons.suncalc.SunTimes
-import java.util.*
-import kotlin.collections.ArrayList
+import java.io.File
+import java.nio.charset.Charset
 
 class MainActivity : AppCompatActivity() {
 
@@ -73,6 +76,7 @@ class MainActivity : AppCompatActivity() {
         checkRootAndSecure()
         setupLottieListener()
         setupNavController()
+        dark_mode_warning.visibility = if(isDarkTheme) View.GONE else View.VISIBLE
     }
 
     private fun setupNavController() {
@@ -88,6 +92,18 @@ class MainActivity : AppCompatActivity() {
                 R.id.mainFragment -> {
                     home.visibility = View.GONE
                 }
+            }
+            val dots = findViewById<ImageView>(R.id.menu)
+            if(destination.id != R.id.mainFragment){
+                dark_mode_warning.visibility = View.GONE
+            }else{
+                dots.visibility = View.GONE
+                dark_mode_warning.visibility = if(isDarkTheme) View.GONE else View.VISIBLE
+            }
+            if(destination.id == R.id.appsFragment){
+                toolbar.elevation = 0f
+            }else{
+                toolbar.elevation = resources.getDimension(R.dimen.toolbar_elevation)
             }
             toolbar_title.text = destination.label
         }
@@ -115,7 +131,7 @@ class MainActivity : AppCompatActivity() {
                             tv.data,
                             resources.displayMetrics
                         )
-                        MainActivity.actionBarHeight = actionBarHeight
+                        Companion.actionBarHeight = actionBarHeight
                         setupStatusPadding()
                     }
                 }
@@ -137,6 +153,7 @@ class MainActivity : AppCompatActivity() {
         loading_text.setTextColor(Color.WHITE)
         toolbar_title.setTextColor(Color.WHITE)
         home.imageTintList = ColorStateList.valueOf(Color.WHITE)
+        menu.imageTintList = ColorStateList.valueOf(Color.WHITE)
         window.decorView.systemUiVisibility = 0
     }
 
@@ -162,6 +179,7 @@ class MainActivity : AppCompatActivity() {
                         delay((anim.duration * 0.9).toLong())
                         toolbar_title.setTextColor(Color.WHITE)
                         home.imageTintList = ColorStateList.valueOf(Color.WHITE)
+                        menu.imageTintList = ColorStateList.valueOf(Color.WHITE)
                         delay((anim.duration * 0.05).toLong())
                         window.decorView.systemUiVisibility = 0
                     })?.start()
@@ -189,6 +207,7 @@ class MainActivity : AppCompatActivity() {
                         delay((anim.duration * 0.9).toLong())
                         toolbar_title.setTextColor(Color.BLACK)
                         home.imageTintList = ColorStateList.valueOf(Color.BLACK)
+                        menu.imageTintList = ColorStateList.valueOf(Color.BLACK)
                         delay((anim.duration * 0.05).toLong())
                         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR or
                                 View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
@@ -210,11 +229,10 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         setupStatusPadding()
-        dark_mode_warning.visibility = if(isDarkTheme) View.GONE else View.VISIBLE
     }
 
     private fun setupStatusPadding() {
-        if (MainActivity.actionBarHeight != null && MainActivity.statusBarHeight != null) {
+        if (actionBarHeight != null && statusBarHeight != null) {
             toolbar?.layoutParams?.height = actionBarHeight!! + statusBarHeight!!
             fragment_container.setPadding(0, statusBarHeight!!, 0, 0)
         }
@@ -225,7 +243,7 @@ class MainActivity : AppCompatActivity() {
             var isRooted = false
             loading_text.text = getString(R.string.checking_root)
             withContext(Dispatchers.Default) {
-                isRooted = Shell.SU.available()
+                isRooted = Shell.rootAccess()
             }
             loading_text.text = getString(R.string.loading_apps)
             withContext(Dispatchers.Default){
@@ -235,11 +253,23 @@ class MainActivity : AppCompatActivity() {
                     activityCallbacks?.onEnabledAppListLoaded(it)
                 }
             }
+            Log.d("DarQ", "isRooted $isRooted")
             if (isRooted) {
+                launchScript()
                 checkServiceRunning()
                 hasCheckedRoot = true
             }else{
-                showNoRootSheet()
+                generateShellScript()
+                checkServiceRunning()
+            }
+        }
+    }
+
+    private fun launchScript(){
+        uiScope.launch {
+            withContext(Dispatchers.Default){
+                val command = DarqIPCReceiver.getLaunchScript(this@MainActivity)
+                runRootCommand(command)
             }
         }
     }
@@ -253,12 +283,14 @@ class MainActivity : AppCompatActivity() {
         }
 
         var hasReceived = false
+        var isIpcEnabled = false
 
         //Register a receiver to wait for the response
         registerReceiver(object : BroadcastReceiver() {
-            override fun onReceive(p0: Context?, p1: Intent?) {
+            override fun onReceive(p0: Context?, intent: Intent?) {
                 hasReceived = true
-                isWaitingForDismiss = true
+                isIpcEnabled = intent?.getBooleanExtra(DarqBackgroundService.KEY_IPC_FOUND, false) ?: false
+                if(isIpcEnabled) isWaitingForDismiss = true
                 unregisterReceiver(this)
             }
         }, IntentFilter(BROADCAST_PONG))
@@ -267,6 +299,13 @@ class MainActivity : AppCompatActivity() {
         uiScope.launch {
             withContext(Dispatchers.Default) {
                 delay(5000L)
+            }
+            if (!isIpcEnabled){
+               if(isRoot){
+                   showNoServiceRootSheet()
+               }else{
+                   showNoServiceSheet()
+               }
             }
             if (!hasReceived) {
                 showAccessibilityRunningSheet()
@@ -279,21 +318,45 @@ class MainActivity : AppCompatActivity() {
         sendBroadcast(intent)
     }
 
-    private fun showNoRootSheet(){
+    private fun showNoServiceSheet(){
         isWaitingToPause = true
         val bottomSheet = BottomSheetFragment()
-        bottomSheet.layout = R.layout.bottom_sheet_no_root
+        bottomSheet.layout =
+            R.layout.bottom_sheet_no_service
+        bottomSheet.cancelListener = {
+            finish()
+            true
+        }
+        bottomSheet.okLabel =
+            R.string.bottom_sheet_no_service_steps
+        bottomSheet.okListener = {
+            startActivity(Intent(this, ModalFaqActivity::class.java))
+            false
+        }
+        if(!supportFragmentManager.isDestroyed) {
+            bottomSheet.show(supportFragmentManager, "bs_no_service")
+        }
+    }
+
+    private fun showNoServiceRootSheet(){
+        isWaitingToPause = true
+        val bottomSheet = BottomSheetFragment()
+        bottomSheet.layout =
+            R.layout.bottom_sheet_no_service_root
         bottomSheet.okListener = {
             finish()
             true
         }
-        bottomSheet.show(supportFragmentManager, "bs_no_root")
+        if(!supportFragmentManager.isDestroyed) {
+            bottomSheet.show(supportFragmentManager, "bs_no_service_root")
+        }
     }
 
     private fun showAccessibilitySheet(){
         isWaitingToPause = true
         val bottomSheet = BottomSheetFragment()
-        bottomSheet.layout = R.layout.bottom_sheet_accessibility
+        bottomSheet.layout =
+            R.layout.bottom_sheet_accessibility
         bottomSheet.cancelListener = {
             finish()
             true
@@ -301,16 +364,22 @@ class MainActivity : AppCompatActivity() {
         bottomSheet.okListener = {
             currentBottomSheet = bottomSheet
             val intent = Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)
-            startActivityForResult(intent, INTENT_RELOAD)
+            startActivityForResult(
+                intent,
+                INTENT_RELOAD
+            )
             false
         }
-        bottomSheet.show(supportFragmentManager, "bs_accessibility")
+        if(!supportFragmentManager.isDestroyed) {
+            bottomSheet.show(supportFragmentManager, "bs_accessibility")
+        }
     }
 
     private fun showAccessibilityRunningSheet(){
         isWaitingToPause = true
         val bottomSheet = BottomSheetFragment()
-        bottomSheet.layout = R.layout.bottom_sheet_accessibility_not_running
+        bottomSheet.layout =
+            R.layout.bottom_sheet_accessibility_not_running
         bottomSheet.cancelListener = {
             finish()
             true
@@ -318,10 +387,33 @@ class MainActivity : AppCompatActivity() {
         bottomSheet.okListener = {
             currentBottomSheet = bottomSheet
             val intent = Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)
-            startActivityForResult(intent, INTENT_RELOAD)
+            startActivityForResult(intent,
+                INTENT_RELOAD
+            )
             false
         }
-        bottomSheet.show(supportFragmentManager, "bs_accessibility_not_running")
+        if(!supportFragmentManager.isDestroyed) {
+            bottomSheet.show(supportFragmentManager, "bs_accessibility_not_running")
+        }
+    }
+
+    private fun generateShellScript(){
+        val rootCommand = DarqIPCReceiver.getLaunchShellScript(this)
+        val file = File(getExternalFilesDir(null), "script.sh")
+        file.parentFile?.mkdirs()
+        file.writer(Charset.defaultCharset()).buffered().run {
+            write("#!/system/bin/sh")
+            newLine()
+            for((count, line) in rootCommand.withIndex()){
+                write(line)
+                if(count < rootCommand.size - 1) {
+                    newLine()
+                }else{
+                    write(" &")
+                }
+            }
+            close()
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -338,7 +430,9 @@ class MainActivity : AppCompatActivity() {
         lottie.pauseAnimation()
         loading_text.text = getString(R.string.loading)
         root.background =
-                if (isDarkTheme) ColorDrawable(Color.BLACK) else ColorDrawable(getColor(R.color.windowBackground))
+                if (isDarkTheme) ColorDrawable(Color.BLACK) else ColorDrawable(getColor(
+                    R.color.windowBackground
+                ))
         createCircularAnimation(isEnd, fragment_container, {
             fragment_container.visibility = View.VISIBLE
         }, {
@@ -350,6 +444,7 @@ class MainActivity : AppCompatActivity() {
             delay((anim.duration * 0.9).toLong())
             toolbar_title.setTextColor(color)
             home.imageTintList = ColorStateList.valueOf(color)
+            menu.imageTintList = ColorStateList.valueOf(color)
             delay((anim.duration * 0.05).toLong())
             window.decorView.systemUiVisibility =
                     if (isDarkTheme) 0 else View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR or
@@ -369,7 +464,7 @@ class MainActivity : AppCompatActivity() {
     private fun loadApps() {
         allApps.clear()
         allApps.addAll(packageManager.getInstalledPackages(0).map {
-            App(it.packageName, packageManager.getApplicationLabel(it.applicationInfo))
+            App(it.packageName, packageManager.getApplicationLabel(it.applicationInfo), it.applicationInfo.flags.and(ApplicationInfo.FLAG_SYSTEM) != 0)
         })
         allApps.sortWith(compareBy{it.appName.toString().toLowerCase()})
         activityCallbacks?.onAppListLoaded(allApps)

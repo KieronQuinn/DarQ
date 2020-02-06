@@ -13,4 +13,6 @@
     <color name="windowBackground">#FAFAFA</color>
     <color name="dark_mode_warning_red">#F44336</color>
     <color name="statusBarColorBottomSheetLight">#666666</color>
+    <color name="search_box_background_light">#F5F5F5</color>
+    <color name="search_box_background_dark">#757575</color>
 </resources>
