@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="setting_whitelist_desc">
+        <item quantity="one">%1d 个软件将会自动开启强制暗色模式</item>
+        <item quantity="other">%1d 个软件将会自动开启强制暗色模式</item>
+    </plurals>
+</resources>
