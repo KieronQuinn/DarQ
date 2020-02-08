@@ -1,3 +1,5 @@
+English | [简体中文](./faq.zh_Hans.md)
+
 DarQ is able to run without root, as long as you run a script from your computer using ADB every time it restarts. Once the script is run, DarQ should function until the next reboot. 
 
 You can find the latest script to run from a Windows, Linux or Mac computer on the [XDA thread](https://forum.xda-developers.com/android/apps-games/app-darq-app-selectable-force-dark-t3944356)
