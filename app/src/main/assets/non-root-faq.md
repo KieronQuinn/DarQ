@@ -1,4 +1,4 @@
-English | [简体中文](./faq.zh_Hans.md)
+English | [简体中文](./non-root-faq.zh_Hans.md)
 
 DarQ is able to run without root, as long as you run a script from your computer using ADB every time it restarts. Once the script is run, DarQ should function until the next reboot. 
 
