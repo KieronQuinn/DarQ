@@ -18,6 +18,7 @@ import android.widget.PopupMenu
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.kieronquinn.app.darq.BuildConfig
 import com.kieronquinn.app.darq.R
 import com.kieronquinn.app.darq.activities.MainActivity
 import com.kieronquinn.app.darq.adapters.AppsAdapter
@@ -133,7 +134,7 @@ class AppsFragment : Fragment() {
             uiScope.launch {
                 withContext(Dispatchers.IO) {
                     val appList = apps.filter {
-                        (!it.isSystemApp || showSystemApps) && (searchString == null || it.appName.toString().toLowerCase(Locale.getDefault()).contains(searchString.toLowerCase(Locale.getDefault())))
+                        (!it.isSystemApp || showSystemApps) && (searchString == null || it.appName.toString().toLowerCase(Locale.getDefault()).contains(searchString.toLowerCase(Locale.getDefault()))) && it.packageName != BuildConfig.APPLICATION_ID
                     }
                     withContext(Dispatchers.Main){
                         callback?.invoke(appList)

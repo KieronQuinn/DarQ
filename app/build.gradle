@@ -67,6 +67,6 @@ dependencies {
     implementation "com.github.topjohnwu.libsu:core:${libsuVersion}"
 
     //Xposed
-    provided 'de.robv.android.xposed:api:82'
+    compileOnly 'de.robv.android.xposed:api:82'
 }
 

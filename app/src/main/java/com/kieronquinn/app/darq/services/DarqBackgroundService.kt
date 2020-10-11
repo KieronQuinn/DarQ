@@ -168,6 +168,9 @@ class DarqBackgroundService : AccessibilityService() {
         refreshEnabledApps("")
         refreshToggles()
         getAlarmTimes()
+        if(isForceDarkTheme){
+            enableForceDark()
+        }
     }
 
     private fun getAlarmTimes() {

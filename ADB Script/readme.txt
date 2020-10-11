@@ -14,6 +14,25 @@ You can find the latest script to run from a Windows, Linux or Mac computer on t
 		Note: On Linux and Mac, `adb` is not included. If you do not have it installed, the script will link you to a guide to do so.
 4.) Make sure the script runs correctly. If it shows an error, it may advise you on what to do. If you find an error that isn't handled correctly, please screenshot while using the -v (verbose) switch and post it on the XDA thread
 
+## Running wirelessly (Android 11+ only):
+
+On Windows:
+1.) Open a command prompt in the directory with the script in it
+2.) Go to Settings > System > Advanced > Developer options, enable Wireless debugging and open it. Select "Pair device with pairing code"
+3.) Run "tools\adb pair <ip:pair port from settings dialog>" and enter the PIN when prompted. The pairing dialog will close after connection
+4.) Run "tools\adb connect <ip:port from settings>"
+5.) Run the batch script. The service will now be run.
+You will need to follow these steps every time the device reboots, as usual
+
+On Mac/Linux:
+Make sure your ADB is up to date before doing this. It will not work on an older ADB version than 30.
+1.) Open a command prompt in the directory with the script in it
+2.) Go to Settings > System > Advanced > Developer options, enable Wireless debugging and open it. Select "Pair device with pairing code"
+3.) Run "adb pair <ip:pair port from settings dialog>" and enter the PIN when prompted. The pairing dialog will close after connection
+4.) Run "adb connect <ip:port from settings>"
+5.) Run the bash script. The service will now be run.
+You will need to follow these steps every time the device reboots, as usual
+
 ## Note:
 As well as if your device is rebooted, the script will need to be re-run if DarQ is force stopped for whatever reason, including if the system kills the background code. This includes toggling the accessibility service (which force stops the app in the process).
 
