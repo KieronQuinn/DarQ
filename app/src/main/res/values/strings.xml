@@ -44,4 +44,5 @@
     <string name="show_system_apps">Show system apps</string>
     <string name="search">Search</string>
     <string name="nothing_found">Nothing found</string>
+    <string name="xposed_desc">Prevent selected apps from disabling force dark (uses same list of apps as normal force dark)</string>
 </resources>

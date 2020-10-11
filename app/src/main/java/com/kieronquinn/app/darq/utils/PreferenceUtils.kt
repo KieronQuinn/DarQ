@@ -11,6 +11,7 @@ class PreferenceUtils(context: Context) {
     companion object {
         const val SHARED_PREFS_NAME = "${BuildConfig.APPLICATION_ID}_preferences"
         const val KEY_ENABLED_APPS = "enabled_apps"
+        const val KEY_GLOBAL_OVERRIDE = "switch_force_dark_mode"
     }
 
     var enabledApps: ArrayList<String> = ArrayList()
@@ -18,7 +19,7 @@ class PreferenceUtils(context: Context) {
     private val sharedPreferences: SharedPreferences = context.getSharedPreferences(SHARED_PREFS_NAME, Context.MODE_PRIVATE)
 
     val isGlobalForceDark
-        get() = sharedPreferences.getBoolean("switch_force_dark_mode", false)
+        get() = sharedPreferences.getBoolean(KEY_GLOBAL_OVERRIDE, false)
 
     val isAutoDarkEnabled
         get() = sharedPreferences.getBoolean("switch_auto_night_dark", false)

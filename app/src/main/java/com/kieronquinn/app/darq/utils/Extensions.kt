@@ -8,6 +8,8 @@ import android.content.Context
 import android.content.ContextWrapper
 import android.content.Intent
 import android.content.res.Configuration
+import android.database.Cursor
+import android.net.Uri
 import android.os.Build
 import android.provider.Settings
 import android.text.TextUtils
@@ -20,6 +22,7 @@ import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.kieronquinn.app.darq.DarqApplication
+import com.kieronquinn.app.darq.providers.SharedPrefsProvider
 import java.io.DataOutputStream
 import java.io.IOException
 import java.io.Serializable
@@ -118,7 +121,7 @@ fun isAccessibilityServiceEnabled(context: Context, accessibilityService: Class<
     val expectedComponentName = ComponentName(context, accessibilityService)
 
     val enabledServicesSetting = Settings.Secure.getString(
-        context.getContentResolver(),
+        context.contentResolver,
         Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES
     )
         ?: return false
@@ -152,10 +155,42 @@ fun getSystemProperty(key: String): String? {
 }
 
 // From https://stackoverflow.com/a/55280832
+@SuppressLint("ResourceAsColor")
 @ColorInt
 fun Context.getColorResCompat(@AttrRes id: Int): Int {
     val resolvedAttr = TypedValue()
     this.theme.resolveAttribute(id, resolvedAttr, true)
     val colorRes = resolvedAttr.run { if (resourceId != 0) resourceId else data }
     return ContextCompat.getColor(this, colorRes)
+}
+
+//Following methods based off https://code.highspec.ru/Mikanoshi/CustoMIUIzer
+fun stringPrefToUri(name: String, defValue: String): Uri {
+    return Uri.parse("content://" + SharedPrefsProvider.AUTHORITY + "/string/" + name + "/" + defValue)
+}
+
+fun boolPrefToUri(name: String, defValue: Boolean): Uri {
+    return Uri.parse("content://" + SharedPrefsProvider.AUTHORITY + "/boolean/" + name + "/" + if (defValue) '1' else '0')
+}
+
+fun getSharedStringPref(context: Context, name: String, defValue: String): String? {
+    val uri: Uri = stringPrefToUri(name, defValue)
+    val cursor: Cursor? = context.contentResolver.query(uri, null, null, null, null)
+    return if (cursor != null) {
+        cursor.moveToFirst()
+        val prefValue: String = cursor.getString(0)
+        cursor.close()
+        prefValue
+    } else null
+}
+
+fun getSharedBoolPref(context: Context, name: String, defValue: Boolean): Boolean {
+    val uri: Uri = boolPrefToUri(name, defValue)
+    val cursor: Cursor? = context.contentResolver.query(uri, null, null, null, null)
+    return if (cursor != null) {
+        cursor.moveToFirst()
+        val prefValue: Int = cursor.getInt(0)
+        cursor.close()
+        prefValue == 1
+    } else defValue
 }

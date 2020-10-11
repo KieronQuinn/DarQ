@@ -178,7 +178,7 @@ class DarqBackgroundService : AccessibilityService() {
                     if (checkCallingOrSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                         val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
                         val criteria = Criteria()
-                        val provider = locationManager.getBestProvider(criteria, true)
+                        val provider = locationManager.getBestProvider(criteria, true)!!
                         val location = locationManager.getLastKnownLocation(provider)
                         if (location != null) Pair(location.latitude, location.longitude)
                         else getTimeZoneLatLng()

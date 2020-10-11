@@ -3,6 +3,9 @@
 *.ap_
 *.aab
 
+# ADB Script binary files
+ADB Script/tools
+
 # Files for the ART/Dalvik VM
 *.dex
 

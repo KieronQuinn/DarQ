@@ -2,7 +2,7 @@
 Force dark was only added as a (hidden) option on Android 10. If you want to change the theme of apps prior to Android 10, you may wish to use a Substratum theme.
 
 ## Why does DarQ need root or adb access?
-Since the final beta of Android 10, the force dark property (`persist.hwui.force_dark`) is only writable with root or with the `shell` UID (which `adb shell` runs with).
+Since the final beta of Android 10, the force dark property (`debug.hwui.force_dark`) is only writable with root or with the `shell` UID (which `adb shell` runs with).
 
 ## Why does DarQ use an Accessibility Service?
 Accessibility services are the quickest and most compatible way to monitor when an app opens and closes, without using hacks like reading the `logcat` (which obviously doesn't work if the device has logs disabled either). If you are worried about DarQ doing anything nefarious using the service, feel free to check the code out on GitHub - and compile the app yourself if you wish - to see what it's doing for yourself.
@@ -22,6 +22,11 @@ Sometimes an app launches too quickly for force dark to be applied. You may have
 
 ## Which apps look good when force dark is enabled?
 During testing; Snapchat, the Google Play Store and LinkedIn were found to be usable with force dark enabled. Plenty more will work too, it's up to you to experiment and see what works for you.
+
+Please note that some of the above require the Xposed module to be enabled for them to work.
+
+## Can Force Dark be made to work on all apps without Xposed?
+No. Apps are able to disable force dark in code, so Xposed is the only way to prevent that.
 
 ## Why does the status bar invert (have black icons) when force dark is enabled? Can it be fixed?
 This appears to be a bug in Android, and as force dark is a developer option, may not be fixed. It may be possible to fix it with DarQ, and this is being investigated
