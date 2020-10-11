@@ -80,6 +80,7 @@ public class DarqIPCReceiver {
                 }
             }
 
+            @SuppressLint("WrongConstant")
             @Override
             public void setDarkEnabled(boolean enabled) throws RemoteException {
                 int state = enabled ? 2 : 1;
@@ -177,76 +178,8 @@ public class DarqIPCReceiver {
 
     }
 
-    public static boolean isDarkTheme(){
+    public static boolean isDarkTheme() {
         return Shell.SH.run("settings get secure ui_night_mode").get(0).equals("2");
-    }
-
-    public static void setSystemUiVisibility(int displayId, int vis, int fullscreenStackVis, int dockedStackVis, int mask, Rect fullscreenBounds, Rect dockedBounds, boolean navbarColorManagedByIme) throws RemoteException, ClassNotFoundException, InvocationTargetException, NoSuchMethodException, IllegalAccessException {
-        Parcel _data = Parcel.obtain();
-        try {
-            _data.writeInterfaceToken("com.android.internal.statusbar.IStatusBar");
-        }
-        catch(Throwable v0) {
-            _data.recycle();
-            throw v0;
-        }
-
-        try {
-            _data.writeInt(displayId);
-        }
-        catch(Throwable v0) {
-            _data.recycle();
-            throw v0;
-        }
-
-        try {
-            _data.writeInt(vis);
-        }
-        catch(Throwable v0) {
-            _data.recycle();
-            throw v0;
-        }
-
-        try {
-            _data.writeInt(fullscreenStackVis);
-            _data.writeInt(dockedStackVis);
-            _data.writeInt(mask);
-            int v1 = 0;
-            if(fullscreenBounds == null) {
-                _data.writeInt(0);
-            }
-            else {
-                _data.writeInt(1);
-                fullscreenBounds.writeToParcel(_data, 0);
-            }
-
-            if(dockedBounds == null) {
-                _data.writeInt(0);
-            }
-            else {
-                _data.writeInt(1);
-                dockedBounds.writeToParcel(_data, 0);
-            }
-
-            if(navbarColorManagedByIme) {
-                v1 = 1;
-            }
-
-            _data.writeInt(v1);
-            //if(!this.mRemote.transact(9, _data, null, 1) && Stub.getDefaultImpl() != null) {
-                Class IStatusBarStub = Class.forName("com.android.internal.statusbar.IStatusBar$Stub");
-                Class IStatusBar = Class.forName("com.android.internal.statusbar.IStatusBar");
-                @SuppressLint("BlockedPrivateApi")
-                Object Stub = IStatusBarStub.getDeclaredMethod("getDefaultImpl").invoke(null);
-                IStatusBar.getDeclaredMethod("setSystemUiVisibility", int.class, int.class, int.class, int.class, int.class, Rect.class, Rect.class, boolean.class).invoke(Stub, displayId, vis, fullscreenStackVis, dockedStackVis, mask, fullscreenBounds, dockedBounds, navbarColorManagedByIme);
-                _data.recycle();
-                return;
-            //}
-        }
-        catch(Throwable v0){
-            _data.recycle();
-            throw v0;
-        }
     }
 
     public static String getLaunchScript(Context context) {

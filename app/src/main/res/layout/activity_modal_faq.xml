@@ -60,7 +60,7 @@
                 android:layout_height="?actionBarSize"
                 android:layout_gravity="bottom"
                 android:id="@+id/home"
-                android:tint="@android:color/black"
+                app:tint="@android:color/black"
                 android:src="?attr/homeAsUpIndicator"
                 android:padding="@dimen/activity_padding"
                 android:foreground="@drawable/rounded_ripple"

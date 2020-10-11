@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/dark_mode_warning"
     android:background="@drawable/dark_mode_warning_background"
     android:orientation="horizontal"
@@ -14,7 +15,7 @@
         android:layout_height="48dp"
         android:src="@drawable/ic_warning"
         android:layout_gravity="center_vertical"
-        android:tint="@android:color/white"/>
+        app:tint="@android:color/white"/>
 
     <TextView
         android:layout_width="match_parent"

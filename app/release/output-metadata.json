@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "artifactType": {
+    "type": "APK",
+    "kind": "Directory"
+  },
+  "applicationId": "com.kieronquinn.app.darq",
+  "variantName": "release",
+  "elements": [
+    {
+      "type": "SINGLE",
+      "filters": [],
+      "properties": [],
+      "versionCode": 13,
+      "versionName": "1.3",
+      "enabled": true,
+      "outputFile": "app-release.apk"
+    }
+  ]
+}
