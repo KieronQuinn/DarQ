@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:clipToPadding="false"
+    tools:background="@drawable/background_dialog_location_permission"
+    tools:elevation="8dp"
+    tools:layout_gravity="center">
+
+    <ImageView
+        android:id="@+id/dialog_location_permission_icon"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="@dimen/padding_16"
+        android:src="@drawable/ic_location"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/accent" />
+
+    <TextView
+        android:id="@+id/dialog_location_permission_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/padding_16"
+        android:gravity="center_horizontal"
+        android:text="@string/dialog_location_permission_text"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large.Darq.Lighter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dialog_location_permission_icon"
+        app:layout_constraintWidth_min="300dp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/dialog_location_permission_accept"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="0dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="@dimen/padding_16"
+        android:layout_marginTop="@dimen/padding_8"
+        android:layout_marginEnd="@dimen/padding_16"
+        android:fontFamily="@font/google_sans_text_medium"
+        android:text="@string/dialog_location_permission_use_location"
+        android:textAllCaps="false"
+        android:textColor="?android:textColorPrimary"
+        app:cornerRadius="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dialog_location_permission_text"
+        app:strokeColor="@color/accent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/dialog_location_permission_deny"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="0dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="@dimen/padding_16"
+        android:layout_marginEnd="@dimen/padding_16"
+        android:fontFamily="@font/google_sans_text_medium"
+        android:text="@string/dialog_location_permission_use_timezone"
+        android:textAllCaps="false"
+        android:textColor="?android:textColorPrimary"
+        app:cornerRadius="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dialog_location_permission_accept"
+        app:strokeColor="@color/accent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/dialog_location_permission_cancel"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/padding_8"
+        android:paddingBottom="@dimen/padding_8"
+        android:text="@android:string/cancel"
+        android:textAllCaps="false"
+        android:textColor="?android:textColorPrimary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dialog_location_permission_deny"
+        app:rippleColor="@android:color/transparent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

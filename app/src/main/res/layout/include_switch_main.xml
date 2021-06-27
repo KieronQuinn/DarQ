@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.kieronquinn.monetcompat.view.MonetSwitch xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/mainSwitchSwitch"
+    android:layout_marginStart="@dimen/padding_16"
+    android:layout_marginEnd="@dimen/padding_16"
+    android:layout_marginTop="@dimen/padding_8"
+    android:layout_marginBottom="@dimen/padding_8"
+    android:text="@string/item_switch_main_title" />

@@ -2,18 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/item_height"
+    android:layout_height="@dimen/item_app_height"
     android:foreground="?selectableItemBackground"
     android:clickable="true"
     android:focusable="true"
     android:orientation="horizontal">
 
     <ImageView
-        android:layout_width="@dimen/item_height"
+        android:layout_width="@dimen/item_app_height"
         android:layout_height="match_parent"
         android:adjustViewBounds="true"
-        android:padding="@dimen/margin_small"
-        android:layout_marginStart="@dimen/margin_small"
+        android:padding="@dimen/padding_8"
+        android:layout_marginStart="@dimen/padding_8"
         android:id="@+id/icon"
         tools:src="@mipmap/ic_launcher" />
 
@@ -24,8 +24,8 @@
         android:layout_gravity="center_vertical"
         tools:text="App Name"
         android:textColor="?android:textColorPrimary"
-        android:layout_marginStart="@dimen/margin_small"
-        android:layout_marginEnd="@dimen/margin_small"
+        android:layout_marginStart="@dimen/padding_8"
+        android:layout_marginEnd="@dimen/padding_8"
         android:id="@+id/title"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium.Darq"/>
 
@@ -34,6 +34,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:id="@+id/checkbox"
-        android:layout_marginEnd="@dimen/activity_padding"/>
+        android:layout_marginEnd="@dimen/padding_8"/>
 
 </LinearLayout>

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_main"
+    app:startDestination="@id/settingsFragment">
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.kieronquinn.app.darq.ui.screens.settings.SettingsFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_settings">
+        <action
+            android:id="@+id/action_settingsFragment_to_settingsAdvancedFragment"
+            app:destination="@id/settingsAdvancedFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_settingsAppPickerFragment"
+            app:destination="@id/settingsAppPickerFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_locationPermissionDialogFragment"
+            app:destination="@id/locationPermissionDialogFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+        <action
+            android:id="@+id/action_settingsFragment_to_settingsDeveloperOptionsFragment"
+            app:destination="@id/settingsDeveloperOptionsFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_settingsFaqFragment"
+            app:destination="@id/settingsFaqFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_ossLicencesActivity"
+            app:destination="@id/ossLicencesActivity"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsAdvancedFragment"
+        android:name="com.kieronquinn.app.darq.ui.screens.settings.advanced.SettingsAdvancedFragment"
+        android:label="@string/item_advanced_options_title"
+        tools:layout="@layout/fragment_settings_advanced" />
+
+    <fragment
+        android:id="@+id/settingsAppPickerFragment"
+        android:name="com.kieronquinn.app.darq.ui.screens.settings.apppicker.SettingsAppPickerFragment"
+        android:label="@string/item_whitelist_title"
+        tools:layout="@layout/fragment_app_picker" />
+
+    <dialog
+        android:id="@+id/shizkuNotRunningBottomSheetFragment"
+        android:name="com.kieronquinn.app.darq.ui.screens.bottomsheets.errors.ShizkuNotRunningBottomSheetFragment"
+        android:label=" "
+        tools:layout="@layout/fragment_bottom_sheet" />
+    <action
+        android:id="@+id/action_global_shizkuNotRunningBottomSheetFragment"
+        app:destination="@id/shizkuNotRunningBottomSheetFragment" />
+    <dialog
+        android:id="@+id/serviceTimeoutBottomSheetFragment"
+        android:name="com.kieronquinn.app.darq.ui.screens.bottomsheets.errors.ServiceTimeoutBottomSheetFragment"
+        android:label=" "
+        tools:layout="@layout/fragment_bottom_sheet" />
+    <action
+        android:id="@+id/action_global_serviceTimeoutBottomSheetFragment"
+        app:destination="@id/serviceTimeoutBottomSheetFragment" />
+    <dialog
+        android:id="@+id/shizukuNotInstalledBottomSheetFragment"
+        android:name="com.kieronquinn.app.darq.ui.screens.bottomsheets.errors.ShizukuNotInstalledBottomSheetFragment"
+        android:label=" "
+        tools:layout="@layout/fragment_bottom_sheet" />
+    <action
+        android:id="@+id/action_global_shizukuNotInstalledBottomSheetFragment"
+        app:destination="@id/shizukuNotInstalledBottomSheetFragment" />
+    <dialog
+        android:id="@+id/shizukuInfoBottomSheetFragment"
+        android:name="com.kieronquinn.app.darq.ui.screens.bottomsheets.errors.ShizukuInfoBottomSheetFragment"
+        android:label=" "
+        tools:layout="@layout/fragment_bottom_sheet" />
+    <action
+        android:id="@+id/action_global_shizukuInfoBottomSheetFragment"
+        app:destination="@id/shizukuInfoBottomSheetFragment" />
+
+    <dialog
+        android:id="@+id/locationPermissionDialogFragment"
+        android:name="com.kieronquinn.app.darq.ui.screens.dialogs.LocationPermissionDialogFragment"
+        android:label=" "
+        tools:layout="@layout/fragment_dialog_location_permission" />
+
+    <fragment
+        android:id="@+id/settingsDeveloperOptionsFragment"
+        android:name="com.kieronquinn.app.darq.ui.screens.settings.developer.SettingsDeveloperOptionsFragment"
+        android:label="@string/item_developer_options_title"
+        tools:layout="@layout/fragment_settings_developer_options" >
+        <action
+            android:id="@+id/action_settingsDeveloperOptionsFragment_to_colorPickerBottomSheetFragment"
+            app:destination="@id/colorPickerBottomSheetFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/colorPickerBottomSheetFragment"
+        android:name="com.kieronquinn.app.darq.ui.screens.settings.developer.colorpicker.ColorPickerBottomSheetFragment"
+        android:label=" "
+        tools:layout="@layout/fragment_bottom_sheet_color_picker" />
+    <fragment
+        android:id="@+id/settingsFaqFragment"
+        android:name="com.kieronquinn.app.darq.ui.screens.settings.faq.SettingsFaqFragment"
+        android:label="@string/item_about_faq_title"
+        tools:layout="@layout/fragment_settings_faq" />
+
+    <activity
+        android:id="@+id/ossLicencesActivity"
+        android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
+        android:label=" " />
+    <dialog
+        android:id="@+id/updateAvailableBottomSheetFragment"
+        android:name="com.kieronquinn.app.darq.ui.screens.bottomsheets.update.UpdateAvailableBottomSheetFragment"
+        android:label=" "
+        tools:layout="@layout/fragment_bottom_sheet">
+        <action
+            android:id="@+id/action_updateAvailableBottomSheetFragment_to_updateDownloadBottomSheetFragment"
+            app:destination="@id/updateDownloadBottomSheetFragment" />
+    </dialog>
+    <action
+        android:id="@+id/action_global_updateAvailableBottomSheetFragment"
+        app:destination="@id/updateAvailableBottomSheetFragment" />
+    <dialog
+        android:id="@+id/updateDownloadBottomSheetFragment"
+        android:name="com.kieronquinn.app.darq.ui.screens.bottomsheets.update.UpdateDownloadBottomSheetFragment"
+        android:label=" "
+        tools:layout="@layout/fragment_bottom_sheet_update_download"/>
+
+</navigation>

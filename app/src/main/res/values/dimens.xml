@@ -1,11 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="activity_padding">16dp</dimen>
-    <dimen name="margin_small">8dp</dimen>
-    <dimen name="item_height">56dp</dimen>
+
+    <dimen name="padding_8">8dp</dimen>
+    <dimen name="padding_16">16dp</dimen>
+    <dimen name="padding_24">24dp</dimen>
+    <dimen name="padding_32">32dp</dimen>
+
+    <dimen name="app_bar_height">200dp</dimen>
+    <dimen name="toolbar_expanded_height">226dp</dimen>
+    <dimen name="toolbar_scrim_visible_height">174dp</dimen>
+    <dimen name="toolbar_expanded_title_margin">16dp</dimen>
+
+    <dimen name="shared_axis_x_slide_distance">96dp</dimen>
+
     <dimen name="bottom_sheet_corner_radius">16dp</dimen>
+    <dimen name="snackbar_max_height">72dp</dimen>
+
+    <dimen name="item_app_height">56dp</dimen>
     <dimen name="search_box_height">48dp</dimen>
     <dimen name="search_box_corners">24dp</dimen>
-    <dimen name="toolbar_elevation">4dp</dimen>
     <dimen name="clear_button_size">36dp</dimen>
+
+    <dimen name="min_window_blur_radius">1px</dimen>
+    <dimen name="max_window_blur_radius">150px</dimen>
+    <!-- TODO move to values-31 eventually -->
+    <dimen name="min_window_blur_radius_31">1px</dimen>
+    <dimen name="max_window_blur_radius_31">32px</dimen>
+
 </resources>

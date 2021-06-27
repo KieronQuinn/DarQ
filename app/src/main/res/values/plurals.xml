@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <plurals name="setting_whitelist_desc">
-        <item quantity="one">%1d app will have force dark applied automatically</item>
-        <item quantity="other">%1d apps will have force dark applied automatically</item>
-    </plurals>
-</resources>

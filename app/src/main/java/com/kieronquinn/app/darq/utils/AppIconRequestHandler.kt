@@ -25,16 +25,16 @@ import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
+import android.graphics.drawable.PictureDrawable
 import android.os.Build
 import android.text.TextUtils
+import com.squareup.picasso.Picasso.LoadedFrom.DISK
 import com.squareup.picasso.Request
 import com.squareup.picasso.RequestHandler
 import java.io.IOException
-import com.squareup.picasso.Picasso.LoadedFrom.DISK
-import android.graphics.drawable.PictureDrawable
-import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.ColorDrawable
 
 //Based on https://github.com/jaredrummler/AndroidProcesses/blob/master/demo/src/main/java/com/jaredrummler/android/processes/sample/picasso/AppIconRequestHandler.java
 
