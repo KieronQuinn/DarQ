@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="AppTheme">
-        <attr name="toolbarColor" format="reference" />
-        <attr name="toolbarTitleColor" format="reference" />
-        <attr name="toolbarMenuTheme" format="reference" />
         <attr name="searchBoxBackground" format="reference" />
     </declare-styleable>
 </resources>

@@ -1,72 +1,136 @@
-apply plugin: 'com.android.application'
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-parcelize'
+    id 'androidx.navigation.safeargs.kotlin'
+    id 'com.google.android.gms.oss-licenses-plugin'
+}
 
-apply plugin: 'com.google.android.gms.oss-licenses-plugin'
-
-apply plugin: 'kotlin-android'
-
-apply plugin: 'kotlin-android-extensions'
+def tagName = '2.0'
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 'android-S'
     defaultConfig {
         applicationId "com.kieronquinn.app.darq"
         minSdkVersion 29
-        targetSdkVersion 30
+        targetSdkVersion 'S'
         versionCode 13
-        versionName "1.3"
+        versionName "2.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("String", "TAG_NAME", "\"${tagName}\"")
     }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    buildFeatures {
+        viewBinding true
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+
+    /**
+     *  Hack that re-replaces the minSdk and targetSdk back to levels that allow installing on lower than Android S Developer Preview
+     *  TODO remove this when S becomes stable
+     */
+    applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            output.getProcessManifestProvider().get().doLast {
+                def manifestPath = "${buildDir.path}/intermediates/merged_manifests/${variant.buildType.name}/AndroidManifest.xml"
+                def manifestFile = new File(manifestPath)
+                def manifestContent = manifestFile.getText()
+                manifestContent = manifestContent
+                        .replaceAll('android:minSdkVersion="S"', 'android:minSdkVersion="29"')
+                        .replaceAll('android:targetSdkVersion="S"', 'android:targetSdkVersion="30"')
+                        .replaceAll('android:testOnly="true"', 'android:testOnly="false"')
+                def fos = new FileOutputStream(manifestFile.getPath())
+                fos.write(manifestContent.getBytes())
+                fos.flush()
+                fos.close()
+            }
+        }
     }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    //Kotlin + Coroutines
+    def kotlinx_coroutines_version = "1.5.0"
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'androidx.core:core-ktx:1.3.2'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.2'
-    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
-    implementation 'com.google.android.material:material:1.3.0-alpha03'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.3.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-    implementation 'eu.chainfire:libsuperuser:1.0.0.201811281328'
-    implementation 'eu.chainfire:librootjava:1.3.0'
-    implementation 'com.airbnb.android:lottie:3.4.0'
-    implementation 'com.squareup.picasso:picasso:2.71828'
-    implementation 'org.shredzone.commons:commons-suncalc:2.4'
-    implementation 'com.google.android.gms:play-services-oss-licenses:17.0.0'
-    implementation "ru.noties.markwon:core:3.0.2"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinx_coroutines_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinx_coroutines_version"
+
+    //Koin
+    def koin_version= "3.1.0"
+    implementation "io.insert-koin:koin-android:$koin_version"
+
+    //AndroidX
+    implementation 'androidx.appcompat:appcompat:1.3.0'
+    implementation 'androidx.core:core-ktx:1.5.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation "androidx.work:work-runtime-ktx:2.5.0"
 
     //Navigation Component
-    def nav_version = "2.3.0"
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+
+    //Lifecycle
+    def lifecycle_version = "2.3.1"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-service:$lifecycle_version"
+
+    //Material
+    implementation 'com.google.android.material:material:1.4.0-rc01'
+
+    //Network
+    implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+
+    //Sunrise/sunset calculator
+    implementation 'org.shredzone.commons:commons-suncalc:2.4'
+
+    //Play Services OSS
+    implementation 'com.google.android.gms:play-services-oss-licenses:17.0.0'
+    implementation "ru.noties.markwon:core:3.0.2"
 
     //Preference Support
     implementation 'androidx.preference:preference-ktx:1.1.1'
 
-    //Coroutines
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.7'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.7'
+    //libsu (root service)
+    def libsuVersion = '3.1.2'
+    implementation "com.github.topjohnwu.libsu:core:$libsuVersion"
+    implementation "com.github.topjohnwu.libsu:service:$libsuVersion"
 
-    //libsu has better root detection for Magisk than libsuperuser it seems, though it is unable to run from the IPC and so libsuperuser is still needed for that
-    def libsuVersion = '2.5.1'
-    implementation "com.github.topjohnwu.libsu:core:${libsuVersion}"
+    //Shizuku (non-root service)
+    def shizuku_version = '11.0.2'
+    implementation "dev.rikka.shizuku:api:$shizuku_version"
+    implementation "dev.rikka.shizuku:provider:$shizuku_version"
 
     //Xposed
     compileOnly 'de.robv.android.xposed:api:82'
+
+    //MonetCompat
+    implementation 'com.github.KieronQuinn:MonetCompat:0.1'
+
+    //Bypass Hidden APIs
+    implementation 'org.lsposed.hiddenapibypass:hiddenapibypass:2.0'
+
+    //Stubs for hidden APIs used by service. Shouldn't be included in APK.
+    compileOnly project(':systemstubs')
+
 }
 

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clipToPadding="false"
+    android:paddingTop="@dimen/padding_8"
+    android:paddingBottom="@dimen/padding_16"
+    tools:layout_gravity="bottom"
+    tools:background="@drawable/bottom_sheet_rounded_bg_dark">
+
+    <TextView
+        android:id="@+id/bottom_sheet_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingTop="@dimen/padding_16"
+        android:paddingBottom="@dimen/padding_16"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large.Darq"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Title"
+        tools:textColor="@android:color/white" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/bottom_sheet_content_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/bottom_sheet_title">
+
+        <TextView
+            android:id="@+id/bottom_sheet_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/padding_16"
+            android:paddingEnd="@dimen/padding_16"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small.Darq"
+            android:textColor="?android:textColorPrimary"
+            tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc tempus gravida augue, vehicula fermentum lectus sodales sit amet. Pellentesque pulvinar semper lectus, ac elementum ex. Curabitur posuere id nunc sed malesuada. Pellentesque quis sollicitudin mauris. Morbi elit turpis, ultricies non."
+            tools:textColor="@android:color/white" />
+
+    </androidx.core.widget.NestedScrollView>
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/bottom_sheet_positive"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/padding_8"
+        android:layout_marginEnd="@dimen/padding_16"
+        android:fontFamily="@font/google_sans_text_medium"
+        android:textAllCaps="false"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bottom_sheet_content_container"
+        tools:text="Positive"
+        tools:textColor="@android:color/white"
+        tools:visibility="visible" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/bottom_sheet_negative"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/padding_8"
+        android:layout_marginEnd="@dimen/padding_16"
+        android:fontFamily="@font/google_sans_text_medium"
+        android:textAllCaps="false"
+        android:visibility="gone"
+        app:layout_constraintEnd_toStartOf="@id/bottom_sheet_positive"
+        app:layout_constraintTop_toBottomOf="@id/bottom_sheet_content_container"
+        tools:text="Negative"
+        tools:textColor="@android:color/white"
+        tools:visibility="visible" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/bottom_sheet_neutral"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/padding_8"
+        android:layout_marginTop="@dimen/padding_8"
+        android:layout_marginEnd="@dimen/padding_16"
+        android:fontFamily="@font/google_sans_text_medium"
+        android:textAllCaps="false"
+        android:visibility="gone"
+        app:layout_constraintEnd_toStartOf="@id/bottom_sheet_negative"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bottom_sheet_content_container"
+        tools:text="Neutral"
+        tools:textColor="@android:color/white"
+        tools:visibility="visible" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

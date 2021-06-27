@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <color android:color="@color/toolbar_dark"/>
+    </item>
+    <item android:drawable="@drawable/ic_launcher_foreground"
+        android:width="300dp"
+        android:height="300dp"
+        android:gravity="center"/>
+</layer-list>

@@ -1,6 +1,7 @@
 package com.kieronquinn.app.darq.utils
 
 import android.content.Context
+import com.kieronquinn.app.darq.model.location.LatLng
 import java.util.*
 import kotlin.math.abs
 import kotlin.math.sign
@@ -9,7 +10,7 @@ class TimeZoneUtils {
 
     companion object {
 
-        fun getLatLngForTimezone(context: Context, timeZone: TimeZone): Pair<Double, Double>? {
+        fun getLatLngForTimezone(context: Context, timeZone: TimeZone): LatLng? {
             val assets = context.assets
             val zoneTab = assets.open("zone.tab").bufferedReader().use { it.readText() }
             val lines = zoneTab.split("\n")
@@ -72,7 +73,7 @@ class TimeZoneUtils {
                         sign(latSplits.first.toDouble()) * (abs(latSplits.first.toDouble()) + (latSplits.second.toDouble() / 60.0) + (latSplits.third.toDouble() / 3600.0))
                     val lng =
                         sign(lngSplits.first.toDouble()) * (abs(lngSplits.first.toDouble()) + (lngSplits.second.toDouble() / 60.0) + (lngSplits.third.toDouble() / 3600.0))
-                    return Pair(lat, lng)
+                    return LatLng(lat, lng)
                 }
             }
 
