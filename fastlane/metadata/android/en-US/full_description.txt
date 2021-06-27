@@ -1,0 +1,7 @@
+DarQ provides a per-app selectable force dark option for Android 10 and above.
+
+It uses a root or Shizuku (ADB) service to apply the theme seamlessly and quickly, without needing an accessibility service.
+
+DarQ also provides an option to apply the system dark theme (as well as selectable force dark) only after sunset and before sunrise, protecting your eyes when it’s most needed.
+
+Please read the Frequently Asked Questions sections in the app or <a href='https://github.com/KieronQuinn/DarQ/blob/master/app/src/main/assets/faq.md'>here</a> for more information and some answers to questions.

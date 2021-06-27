@@ -1,0 +1,1 @@
+Per-app selectable force dark option for Android 10+
