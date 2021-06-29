@@ -31,7 +31,7 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
 import org.lsposed.hiddenapibypass.HiddenApiBypass
-
+import rikka.sui.Sui
 
 class DarqApplication : Application() {
 
@@ -73,6 +73,7 @@ class DarqApplication : Application() {
             androidContext(this@DarqApplication)
             modules(serviceModule, appComponentsModule, viewModelsModule, providersModule)
         }
+        Sui.init(packageName)
         setupMonet()
     }
 
