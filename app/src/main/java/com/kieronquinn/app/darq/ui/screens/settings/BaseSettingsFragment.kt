@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.doOnLayout
 import androidx.core.view.updatePadding
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -27,11 +28,11 @@ abstract class BaseSettingsFragment<T: ViewBinding>(inflate: (LayoutInflater, Vi
     internal val settings by inject<DarqSharedPreferences>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        exitTransition = TransitionUtils.getMaterialSharedAxis(requireContext(), true, rootViewId = R.id.root)
-        enterTransition = TransitionUtils.getMaterialSharedAxis(requireContext(), true, rootViewId = R.id.root)
-        returnTransition = TransitionUtils.getMaterialSharedAxis(requireContext(), false, rootViewId = R.id.root)
-        reenterTransition = TransitionUtils.getMaterialSharedAxis(requireContext(), false, rootViewId = R.id.root)
         super.onCreate(savedInstanceState)
+        exitTransition = TransitionUtils.getMaterialSharedAxis(requireContext(), true)
+        enterTransition = TransitionUtils.getMaterialSharedAxis(requireContext(), true)
+        returnTransition = TransitionUtils.getMaterialSharedAxis(requireContext(), false)
+        reenterTransition = TransitionUtils.getMaterialSharedAxis(requireContext(), false)
     }
 
     internal fun setupRecyclerView(recyclerView: RecyclerView, settingsAdapter: SettingsAdapter) {

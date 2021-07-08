@@ -24,10 +24,10 @@ import ru.noties.markwon.core.MarkwonTheme
 class SettingsFaqFragment: BoundFragment<FragmentSettingsFaqBinding>(FragmentSettingsFaqBinding::inflate), BackAvailable, AutoExpandOnRotate {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        exitTransition = TransitionUtils.getMaterialSharedAxis(requireContext(), true, rootViewId = R.id.root)
-        enterTransition = TransitionUtils.getMaterialSharedAxis(requireContext(), true, rootViewId = R.id.root)
-        returnTransition = TransitionUtils.getMaterialSharedAxis(requireContext(), false, rootViewId = R.id.root)
-        reenterTransition = TransitionUtils.getMaterialSharedAxis(requireContext(), false, rootViewId = R.id.root)
+        exitTransition = TransitionUtils.getMaterialSharedAxis(requireContext(), true)
+        enterTransition = TransitionUtils.getMaterialSharedAxis(requireContext(), true)
+        returnTransition = TransitionUtils.getMaterialSharedAxis(requireContext(), false)
+        reenterTransition = TransitionUtils.getMaterialSharedAxis(requireContext(), false)
         super.onCreate(savedInstanceState)
     }
 

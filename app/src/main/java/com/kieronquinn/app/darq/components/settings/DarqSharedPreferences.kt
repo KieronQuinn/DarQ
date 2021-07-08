@@ -1,7 +1,10 @@
 package com.kieronquinn.app.darq.components.settings
 
 import com.kieronquinn.app.darq.model.settings.IPCSetting
+import com.kieronquinn.app.darq.model.settings.SettingsBackup
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.withContext
 import org.json.JSONArray
 
 abstract class DarqSharedPreferences: BaseSharedPreferences() {
@@ -29,9 +32,15 @@ abstract class DarqSharedPreferences: BaseSharedPreferences() {
         private const val KEY_DEVELOPER_OPTIONS = "developer_options"
         private const val DEFAULT_DEVELOPER_OPTIONS = false
 
+        private const val KEY_XPOSED_AGGRESSIVE_DARK = "xposed_aggressive_dark"
+        const val DEFAULT_XPOSED_AGGRESSIVE_DARK = true
+
+        private const val KEY_XPOSED_INVERT_STATUS_BAR = "xposed_invert_status_bar"
+        const val DEFAULT_XPOSED_INVERT_STATUS_BAR = true
+
         private const val KEY_UI_MONET_COLOR = "monet_color"
 
-        private const val KEY_ENABLED_APPS = "enabled_apps"
+        const val KEY_ENABLED_APPS = "enabled_apps"
 
     }
 
@@ -47,6 +56,9 @@ abstract class DarqSharedPreferences: BaseSharedPreferences() {
     var monetColor by this.shared(KEY_UI_MONET_COLOR, Integer.MAX_VALUE)
     var enabledApps by this.sharedJSONArray(KEY_ENABLED_APPS)
 
+    var xposedAggressiveDark by this.shared(KEY_XPOSED_AGGRESSIVE_DARK, DEFAULT_XPOSED_AGGRESSIVE_DARK)
+    var xposedInvertStatus by this.shared(KEY_XPOSED_INVERT_STATUS_BAR, DEFAULT_XPOSED_INVERT_STATUS_BAR)
+
     fun getIPCSettingForKey(key: String): IPCSetting? {
         return when(key){
             KEY_ENABLED -> IPCSetting(enabled = enabled)
@@ -59,6 +71,41 @@ abstract class DarqSharedPreferences: BaseSharedPreferences() {
 
     fun toIPCSetting(): IPCSetting {
         return IPCSetting(enabled, oxygenForceDark, alwaysForceDark, sendAppCloses)
+    }
+
+    fun getSettingsBackup(): SettingsBackup {
+        return SettingsBackup(
+            enabled = this.enabled,
+            autoDarkTheme = this.autoDarkTheme,
+            useLocation = this.useLocation,
+            sendAppCloses = this.sendAppCloses,
+            oxygenForceDark = this.oxygenForceDark,
+            alwaysForceDark = this.alwaysForceDark,
+            developerOptions = this.developerOptions,
+            monetColor = this.monetColor,
+            xposedAggressiveDark = this.xposedAggressiveDark,
+            xposedInvertStatus = this.xposedInvertStatus,
+            enabledApps = this.enabledApps.toList()
+        )
+    }
+
+    /**
+     *  Restores from a given [SettingsBackup]
+     *  @return Whether useLocation is set, and therefore to prompt for location permission
+     */
+    suspend fun fromSettingsBackup(settingsBackup: SettingsBackup): Boolean = withContext(Dispatchers.IO) {
+        val currentUseLocation = useLocation && autoDarkTheme
+        enabled = settingsBackup.enabled
+        autoDarkTheme = settingsBackup.autoDarkTheme
+        sendAppCloses = settingsBackup.sendAppCloses
+        oxygenForceDark = settingsBackup.oxygenForceDark
+        alwaysForceDark = settingsBackup.alwaysForceDark
+        developerOptions = settingsBackup.developerOptions
+        monetColor = settingsBackup.monetColor
+        xposedAggressiveDark = settingsBackup.xposedAggressiveDark
+        xposedInvertStatus = settingsBackup.xposedInvertStatus
+        enabledApps = settingsBackup.enabledApps.toTypedArray()
+        return@withContext (useLocation && autoDarkTheme) && !currentUseLocation
     }
 
     internal fun JSONArray.toStringArray(): Array<String> {

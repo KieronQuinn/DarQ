@@ -3,8 +3,10 @@ package com.kieronquinn.app.darq.components.settings
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 import com.kieronquinn.app.darq.BuildConfig
 import com.kieronquinn.app.darq.model.settings.IPCSetting
+import com.kieronquinn.app.darq.model.xposed.XposedSelfHooks
 import com.kieronquinn.app.darq.utils.extensions.ReadWriteProperty
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -13,6 +15,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import org.json.JSONArray
+import java.io.File
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
@@ -21,7 +24,20 @@ import kotlin.reflect.KProperty
 class AppSharedPreferences(context: Context): DarqSharedPreferences() {
 
     override val sharedPreferences: SharedPreferences by lazy {
-        context.getSharedPreferences("${BuildConfig.APPLICATION_ID}_prefs", Context.MODE_PRIVATE)
+        val prefsFile = "${BuildConfig.APPLICATION_ID}_prefs"
+        try {
+            context.getSharedPreferences(
+                prefsFile,
+                Context.MODE_WORLD_READABLE
+            ).also {
+                makeWorldReadable()
+            }
+        }catch (e: SecurityException){
+            context.getSharedPreferences(
+                prefsFile,
+                Context.MODE_PRIVATE
+            )
+        }
     }
 
     private val _changed = MutableSharedFlow<IPCSetting>()
@@ -89,6 +105,7 @@ class AppSharedPreferences(context: Context): DarqSharedPreferences() {
     }, {
         runInBackground {
             sharedPreferences.edit().putString(key, it.toJSONArray().toString()).commit()
+            notifyPrefChange(key)
         }
     })
 
@@ -110,6 +127,7 @@ class AppSharedPreferences(context: Context): DarqSharedPreferences() {
     }
 
     fun notifyPrefChange(key: String){
+        makeWorldReadable()
         val ipcSetting = getIPCSettingForKey(key) ?: return
         GlobalScope.launch(Dispatchers.IO) {
             _changed.emit(ipcSetting)
@@ -126,6 +144,20 @@ class AppSharedPreferences(context: Context): DarqSharedPreferences() {
         return JSONArray().apply {
             this@toJSONArray.forEach {
                 put(it)
+            }
+        }
+    }
+
+    /**
+     *  Make the redirected prefs file world readable ourselves - fixes a bug in Ed/lsposed
+     *
+     *  This requires the XSharedPreferences file path, which we get via a self hook. It does nothing
+     *  when the Xposed module is not enabled.
+     */
+    private fun makeWorldReadable(){
+        XposedSelfHooks.getXSharedPrefsPath().let {
+            if(it.isNotEmpty()){
+                File(it).setReadable(true, false)
             }
         }
     }

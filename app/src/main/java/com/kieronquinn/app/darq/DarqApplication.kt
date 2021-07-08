@@ -3,6 +3,7 @@ package com.kieronquinn.app.darq
 import android.app.Application
 import android.app.DownloadManager
 import android.content.Context
+import android.util.Log
 import com.kieronquinn.app.darq.components.github.UpdateChecker
 import com.kieronquinn.app.darq.components.navigation.Navigation
 import com.kieronquinn.app.darq.components.navigation.NavigationImpl
@@ -10,6 +11,12 @@ import com.kieronquinn.app.darq.components.settings.AppSharedPreferences
 import com.kieronquinn.app.darq.components.settings.DarqSharedPreferences
 import com.kieronquinn.app.darq.providers.DarqServiceConnectionProvider
 import com.kieronquinn.app.darq.providers.blur.BlurProvider
+import com.kieronquinn.app.darq.ui.screens.bottomsheets.backuprestore.BackupRestoreBottomSheetViewModel
+import com.kieronquinn.app.darq.ui.screens.bottomsheets.backuprestore.BackupRestoreBottomSheetViewModelImpl
+import com.kieronquinn.app.darq.ui.screens.bottomsheets.backuprestore.backup.BackupRestoreBackupBottomSheetViewModel
+import com.kieronquinn.app.darq.ui.screens.bottomsheets.backuprestore.backup.BackupRestoreBackupBottomSheetViewModelImpl
+import com.kieronquinn.app.darq.ui.screens.bottomsheets.backuprestore.restore.BackupRestoreRestoreBottomSheetViewModelImpl
+import com.kieronquinn.app.darq.ui.screens.bottomsheets.backuprestore.restore.BackupRestoreRestoreViewModel
 import com.kieronquinn.app.darq.ui.screens.bottomsheets.update.UpdateDownloadBottomSheetViewModel
 import com.kieronquinn.app.darq.ui.screens.bottomsheets.update.UpdateDownloadBottomSheetViewModelImpl
 import com.kieronquinn.app.darq.ui.screens.container.ContainerSharedViewModel
@@ -52,6 +59,9 @@ class DarqApplication : Application() {
         viewModel<SettingsDeveloperOptionsViewModel>{ SettingsDeveloperOptionsViewModelImpl(get()) }
         viewModel<UpdateDownloadBottomSheetViewModel>{ UpdateDownloadBottomSheetViewModelImpl(getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager) }
         viewModel<LocationPermissionDialogViewModel> { LocationPermissionDialogViewModelImpl(get(), get()) }
+        viewModel<BackupRestoreBottomSheetViewModel> { BackupRestoreBottomSheetViewModelImpl(get()) }
+        viewModel<BackupRestoreBackupBottomSheetViewModel> { BackupRestoreBackupBottomSheetViewModelImpl(get(), get(), get()) }
+        viewModel<BackupRestoreRestoreViewModel> { BackupRestoreRestoreBottomSheetViewModelImpl(get(), get(), get()) }
     }
 
     private val providersModule = module {
@@ -73,6 +83,8 @@ class DarqApplication : Application() {
             androidContext(this@DarqApplication)
             modules(serviceModule, appComponentsModule, viewModelsModule, providersModule)
         }
+        val applicationThread = Context::class.java.getMethod("getIApplicationThread").invoke(this as Context)
+        Log.d("DarQA", "ApplicationThread $applicationThread")
         Sui.init(packageName)
         setupMonet()
     }

@@ -13,6 +13,7 @@ import com.kieronquinn.app.darq.providers.DarqServiceConnectionProvider
 import com.kieronquinn.app.darq.utils.extensions.isDarkTheme
 import com.kieronquinn.app.darq.utils.extensions.secureSettingIntFlow
 import kotlinx.coroutines.*
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import java.util.*
 import kotlin.reflect.KSuspendFunction0
@@ -36,6 +37,9 @@ abstract class ContainerSharedViewModel: ViewModel() {
     abstract val autoDarkTheme: Flow<Boolean>
 
     abstract fun setAutoDarkThemeEnabled(enabled: Boolean)
+
+    abstract val restoreBus: Flow<Unit>
+    abstract fun onRestoreSuccess()
 
     sealed class SyncState {
         object NotSyncing: SyncState()
@@ -233,5 +237,13 @@ class ContainerSharedViewModelImpl(context: Context, private val serviceProvider
 
     override val syncState: Flow<SyncState> = _syncState
     override val showSnackbar: Flow<Boolean> = syncState.map { it !is SyncState.NotSyncing }.distinctUntilChanged { old, new -> old == new }
+
+    private val _restoreBus = Channel<Unit>()
+    override val restoreBus = _restoreBus.receiveAsFlow()
+    override fun onRestoreSuccess() {
+        viewModelScope.launch {
+            _restoreBus.send(Unit)
+        }
+    }
 
 }

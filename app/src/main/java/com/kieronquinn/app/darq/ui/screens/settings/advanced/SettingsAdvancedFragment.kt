@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.kieronquinn.app.darq.R
 import com.kieronquinn.app.darq.databinding.FragmentSettingsAdvancedBinding
+import com.kieronquinn.app.darq.databinding.FragmentSettingsXposedBinding
 import com.kieronquinn.app.darq.model.settings.SettingsItem
 import com.kieronquinn.app.darq.ui.base.AutoExpandOnRotate
 import com.kieronquinn.app.darq.ui.base.BackAvailable
@@ -13,7 +14,8 @@ import com.kieronquinn.app.darq.ui.screens.settings.BaseSettingsFragment
 import com.kieronquinn.app.darq.ui.screens.settings.SettingsAdapter
 import com.kieronquinn.monetcompat.extensions.views.applyMonetRecursively
 
-class SettingsAdvancedFragment : BaseSettingsFragment<FragmentSettingsAdvancedBinding>(FragmentSettingsAdvancedBinding::inflate), AutoExpandOnRotate, BackAvailable {
+class SettingsAdvancedFragment : BaseSettingsFragment<FragmentSettingsAdvancedBinding>(
+    FragmentSettingsAdvancedBinding::inflate), AutoExpandOnRotate, BackAvailable {
 
     override val settingsItems by lazy {
         listOf<SettingsItem>(

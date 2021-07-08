@@ -76,7 +76,10 @@
 			android:value="@string/xposed_desc" />
 		<meta-data
 			android:name="xposedminversion"
-			android:value="53" />
+			android:value="93" />
+		<meta-data
+			android:name="xposedsharedprefs"
+			android:value="true" />
 
 	</application>
 

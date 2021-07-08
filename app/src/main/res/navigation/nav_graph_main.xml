@@ -34,6 +34,12 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_settingsFragment_to_xposedSettingsFragment"
+            app:destination="@id/xposedSettingsFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_backupRestoreBottomSheetFragment"
+            app:destination="@id/backupRestoreBottomSheetFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingsAdvancedFragment"
@@ -127,5 +133,45 @@
         android:name="com.kieronquinn.app.darq.ui.screens.bottomsheets.update.UpdateDownloadBottomSheetFragment"
         android:label=" "
         tools:layout="@layout/fragment_bottom_sheet_update_download"/>
+    <fragment
+        android:id="@+id/xposedSettingsFragment"
+        android:name="com.kieronquinn.app.darq.ui.screens.settings.xposed.XposedSettingsFragment"
+        android:label="@string/item_xposed_title"
+        tools:layout="@layout/fragment_settings_xposed" />
+    <dialog
+        android:id="@+id/backupRestoreBottomSheetFragment"
+        android:name="com.kieronquinn.app.darq.ui.screens.bottomsheets.backuprestore.BackupRestoreBottomSheetFragment"
+        android:label=" "
+        tools:layout="@layout/fragment_bottom_sheet_backup_restore" >
+        <action
+            android:id="@+id/action_backupRestoreBottomSheetFragment_to_backupRestoreBackupBottomSheetFragment"
+            app:destination="@id/backupRestoreBackupBottomSheetFragment" />
+        <action
+            android:id="@+id/action_backupRestoreBottomSheetFragment_to_backupRestoreRestoreBottomSheetFragment"
+            app:destination="@id/backupRestoreRestoreBottomSheetFragment" />
+    </dialog>
+    <dialog
+        android:id="@+id/backupRestoreBackupBottomSheetFragment"
+        android:name="com.kieronquinn.app.darq.ui.screens.bottomsheets.backuprestore.backup.BackupRestoreBackupBottomSheetFragment"
+        android:label=" "
+        tools:layout="@layout/fragment_bottom_sheet_backup">
+        <argument
+            android:name="uri"
+            app:argType="android.net.Uri" />
+    </dialog>
+    <dialog
+        android:id="@+id/backupRestoreRestoreBottomSheetFragment"
+        android:name="com.kieronquinn.app.darq.ui.screens.bottomsheets.backuprestore.restore.BackupRestoreRestoreBottomSheetFragment"
+        android:label=" "
+        tools:layout="@layout/fragment_bottom_sheet_restore">
+        <argument
+            android:name="uri"
+            app:argType="android.net.Uri" />
+    </dialog>
+    <action
+        android:id="@+id/action_global_locationPermissionDialogFragment"
+        app:destination="@id/locationPermissionDialogFragment"
+        app:enterAnim="@android:anim/fade_in"
+        app:exitAnim="@android:anim/fade_out" />
 
 </navigation>
