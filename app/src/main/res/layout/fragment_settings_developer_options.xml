@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:transitionGroup="true"
     android:id="@+id/root">
 
     <androidx.recyclerview.widget.RecyclerView

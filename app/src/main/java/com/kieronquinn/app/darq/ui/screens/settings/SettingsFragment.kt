@@ -7,6 +7,7 @@ import android.text.SpannableString
 import android.text.SpannableStringBuilder
 import android.text.style.RelativeSizeSpan
 import android.text.style.TypefaceSpan
+import android.util.Log
 import android.view.*
 import androidx.annotation.StringRes
 import androidx.core.content.res.ResourcesCompat
@@ -16,6 +17,7 @@ import com.kieronquinn.app.darq.BuildConfig
 import com.kieronquinn.app.darq.R
 import com.kieronquinn.app.darq.databinding.FragmentSettingsBinding
 import com.kieronquinn.app.darq.model.settings.SettingsItem
+import com.kieronquinn.app.darq.model.xposed.XposedSelfHooks
 import com.kieronquinn.app.darq.ui.base.AutoExpandOnRotate
 import com.kieronquinn.app.darq.ui.base.ProvidesOverflow
 import com.kieronquinn.monetcompat.extensions.views.applyMonetRecursively
@@ -56,6 +58,19 @@ class SettingsFragment : BaseSettingsFragment<FragmentSettingsBinding>(FragmentS
                 getString(R.string.item_advanced_options_title),
                 getString(R.string.item_advanced_options_content),
                 tapAction = viewModel::onAdvancedOptionsClicked
+            ),
+            SettingsItem.Setting(
+                R.drawable.ic_xposed_round,
+                getString(R.string.item_xposed_title),
+                getString(R.string.item_xposed_content),
+                visible = { XposedSelfHooks.isXposedModuleEnabled() },
+                tapAction = viewModel::onXposedClicked
+            ),
+            SettingsItem.Setting(
+                R.drawable.ic_restore_round,
+                getString(R.string.item_backup_restore_title),
+                getString(R.string.item_backup_restore_content),
+                tapAction = viewModel::onBackupRestoreClicked
             ),
             SettingsItem.Setting(
                 R.drawable.ic_developer_options_round,
@@ -99,15 +114,13 @@ class SettingsFragment : BaseSettingsFragment<FragmentSettingsBinding>(FragmentS
         setupSnackbarPadding(binding.recyclerView)
         setupAutoDarkTheme()
         setupDeveloperOptions()
+        setupRestoreListener()
     }
 
     private fun setupMainSwitch() {
         binding.switchMain.run {
             mainSwitchSwitch.typeface = ResourcesCompat.getFont(requireContext(), R.font.google_sans_text_medium)
-            mainSwitchSwitch.isChecked = settings.enabled
-            mainSwitchSwitch.setOnCheckedChangeListener { _, isChecked ->
-                settings.enabled = isChecked
-            }
+            updateMainSwitch()
         }
         lifecycleScope.launch {
             sharedViewModel.switchWarning.collect {
@@ -122,6 +135,14 @@ class SettingsFragment : BaseSettingsFragment<FragmentSettingsBinding>(FragmentS
                     update.invoke()
                 }
             }
+        }
+    }
+
+    private fun updateMainSwitch() = with(binding.switchMain) {
+        mainSwitchSwitch.setOnCheckedChangeListener(null)
+        mainSwitchSwitch.isChecked = settings.enabled
+        mainSwitchSwitch.setOnCheckedChangeListener { _, isChecked ->
+            settings.enabled = isChecked
         }
     }
 
@@ -158,6 +179,15 @@ class SettingsFragment : BaseSettingsFragment<FragmentSettingsBinding>(FragmentS
             SpannableStringBuilder().apply {
                 appendLine(getString(R.string.item_switch_main_title))
                 append(secondLine)
+            }
+        }
+    }
+
+    private fun setupRestoreListener(){
+        lifecycleScope.launchWhenResumed {
+            sharedViewModel.restoreBus.collect {
+                adapter.notifySwitchSettings()
+                updateMainSwitch()
             }
         }
     }

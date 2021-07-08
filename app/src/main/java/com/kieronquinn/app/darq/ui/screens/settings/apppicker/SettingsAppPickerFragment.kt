@@ -57,11 +57,11 @@ class SettingsAppPickerFragment :
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        exitTransition = TransitionUtils.getMaterialSharedAxis(requireContext(), true, rootViewId = R.id.root)
-        enterTransition = TransitionUtils.getMaterialSharedAxis(requireContext(), true, rootViewId = R.id.root)
-        returnTransition = TransitionUtils.getMaterialSharedAxis(requireContext(), false, rootViewId = R.id.root)
-        reenterTransition = TransitionUtils.getMaterialSharedAxis(requireContext(), false, rootViewId = R.id.root)
         super.onCreate(savedInstanceState)
+        exitTransition = TransitionUtils.getMaterialSharedAxis(requireContext(), true)
+        enterTransition = TransitionUtils.getMaterialSharedAxis(requireContext(), true)
+        returnTransition = TransitionUtils.getMaterialSharedAxis(requireContext(), false)
+        reenterTransition = TransitionUtils.getMaterialSharedAxis(requireContext(), false)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

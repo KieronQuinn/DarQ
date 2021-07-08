@@ -144,8 +144,8 @@ class ContainerFragment: BoundFragment<FragmentContainerBinding>(FragmentContain
 
     private fun handleNavigationEvent(navigationEvent: Navigation.NavigationEvent) {
         when (navigationEvent) {
-            is Navigation.NavigationEvent.Directions -> navController.navigate(navigationEvent.directions)
-            is Navigation.NavigationEvent.Id -> navController.navigate(navigationEvent.id)
+            is Navigation.NavigationEvent.Directions -> navController.navigateSafely(navigationEvent.directions)
+            is Navigation.NavigationEvent.Id -> navController.navigateSafely(navigationEvent.id)
             is Navigation.NavigationEvent.Back -> if(!navController.navigateUp()) activity?.finish()
             is Navigation.NavigationEvent.PopupTo -> navController.popBackStack(
                 navigationEvent.id,
@@ -240,6 +240,7 @@ class ContainerFragment: BoundFragment<FragmentContainerBinding>(FragmentContain
     }
 
     private fun getTopFragment(): Fragment? {
+        if(!navHostFragment.isAdded) return null
         return navHostFragment.childFragmentManager.fragments.firstOrNull()
     }
 

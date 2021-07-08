@@ -79,7 +79,7 @@ abstract class BaseBottomSheetFragment<T: ViewBinding>(private val inflate: (Lay
         }
         dialog.setOnShowListener {
             (binding.root.parent as View).backgroundTintList = ColorStateList.valueOf(monet.getBackgroundColor(requireContext()))
-            behavior = BottomSheetBehavior.from(dialog.findViewById(R.id.design_bottom_sheet)!!).apply {
+            behavior = dialog.behavior.apply {
                 isDraggable = cancelable
                 state = BottomSheetBehavior.STATE_EXPANDED
                 addBottomSheetCallback(bottomSheetCallback)

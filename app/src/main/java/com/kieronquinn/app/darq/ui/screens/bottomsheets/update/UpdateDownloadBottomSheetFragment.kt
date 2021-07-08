@@ -3,6 +3,9 @@ package com.kieronquinn.app.darq.ui.screens.bottomsheets.update
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import androidx.lifecycle.lifecycleScope
 import com.kieronquinn.app.darq.R
 import com.kieronquinn.app.darq.databinding.FragmentBottomSheetUpdateDownloadBinding
@@ -31,6 +34,12 @@ class UpdateDownloadBottomSheetFragment: BaseBottomSheetFragment<FragmentBottomS
         binding.fragmentUpdateDownloadCancel.setOnClickListener {
             updateViewModel.cancelDownload(requireContext())
             dismiss()
+        }
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root){ view, insets ->
+            val bottomInset = insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
+            val extraPadding = resources.getDimension(R.dimen.padding_8).toInt()
+            view.updatePadding(bottom = bottomInset + extraPadding)
+            insets
         }
         binding.fragmentUpdateDownloadProgress.applyMonet()
         val accentColor = monet.getAccentColor(requireContext())

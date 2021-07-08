@@ -23,6 +23,8 @@
         android:layout_weight="1"
         android:layout_gravity="center_vertical"
         tools:text="App Name"
+        android:maxLines="2"
+        android:ellipsize="end"
         android:textColor="?android:textColorPrimary"
         android:layout_marginStart="@dimen/padding_8"
         android:layout_marginEnd="@dimen/padding_8"

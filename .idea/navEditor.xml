@@ -115,6 +115,51 @@
                       <LayoutPositions />
                     </value>
                   </entry>
+                  <entry key="backupRestoreBackupBottomSheetFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="934" />
+                            <option name="y" value="757" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="backupRestoreBottomSheetFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="500" />
+                            <option name="y" value="632" />
+                          </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_backupRestoreBottomSheetFragment_to_backupRestoreBackupBottomSheetFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="backupRestoreRestoreBottomSheetFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="939" />
+                            <option name="y" value="415" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="colorPickerBottomSheetFragment">
                     <value>
                       <LayoutPositions>
@@ -231,6 +276,11 @@
                         </option>
                         <option name="myPositions">
                           <map>
+                            <entry key="action_settingsFragment_to_backupRestoreBottomSheetFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                             <entry key="action_settingsFragment_to_locationPermissionDialogFragment">
                               <value>
                                 <LayoutPositions />
@@ -257,6 +307,11 @@
                               </value>
                             </entry>
                             <entry key="action_settingsFragment_to_settingsFaqFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="action_settingsFragment_to_xposedSettingsFragment">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -311,6 +366,15 @@
                             <option name="y" value="642" />
                           </Point>
                         </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_updateAvailableBottomSheetFragment_to_updateDownloadBottomSheetFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
                       </LayoutPositions>
                     </value>
                   </entry>
@@ -321,6 +385,18 @@
                           <Point>
                             <option name="x" value="285" />
                             <option name="y" value="641" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="xposedSettingsFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="506" />
+                            <option name="y" value="343" />
                           </Point>
                         </option>
                       </LayoutPositions>

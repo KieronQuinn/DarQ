@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:padding="@dimen/padding_16"
     android:id="@+id/root"
+    android:transitionGroup="true"
     android:clipToPadding="false">
 
     <TextView

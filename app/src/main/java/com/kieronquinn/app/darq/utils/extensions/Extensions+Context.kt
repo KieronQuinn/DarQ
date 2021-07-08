@@ -9,8 +9,11 @@ import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
 
 val Context.isDarkTheme: Boolean
+    get() = resources.configuration.isDarkTheme
+
+val Configuration.isDarkTheme: Boolean
     get() {
-        return resources.configuration.uiMode and
+        return uiMode and
                 Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
     }
 

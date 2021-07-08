@@ -3,6 +3,7 @@ package com.kieronquinn.app.darq.ui.screens.settings
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
@@ -94,6 +95,9 @@ class SettingsAdapter(context: Context, private var items: List<SettingsItem>): 
                 action.invoke()
             }
         }
+        if(!item.centerIconVertically){
+            binding.root.gravity = Gravity.NO_GRAVITY
+        }
     }
 
     private fun setupTripleTapActionSetting(binding: ItemSettingAboutBinding, item: SettingsItem.AboutSetting) = with(binding) {
@@ -159,6 +163,17 @@ class SettingsAdapter(context: Context, private var items: List<SettingsItem>): 
         }
         root.setOnClickListener {
             itemSettingSwitchSwitch.toggle()
+        }
+        if(!item.centerIconVertically){
+            binding.root.gravity = Gravity.NO_GRAVITY
+        }
+    }
+
+    fun notifySwitchSettings(){
+        items.forEachIndexed { index, settingsItem ->
+            if(settingsItem is SettingsItem.SwitchSetting) {
+                notifyItemChanged(index)
+            }
         }
     }
 

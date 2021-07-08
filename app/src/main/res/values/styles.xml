@@ -11,6 +11,7 @@
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="searchBoxBackground">@color/search_box_background</item>
         <item name="textAppearanceLargePopupMenu">@style/AppTheme.TextAppearance.Popup</item>
+        <item name="actionOverflowMenuStyle">@style/DarqOverflowMenu</item>
     </style>
 
     <style name="TextAppearance.AppCompat.Small.Darq" parent="TextAppearance.AppCompat.Small">
@@ -69,6 +70,10 @@
         <item name="android:windowExitAnimation">@anim/fade_out</item>
     </style>
 
+    <style name="DarqOverflowMenu" parent="@style/Widget.MaterialComponents.PopupMenu.Overflow">
+        <item name="android:popupBackground">@drawable/background_menu</item>
+    </style>
+
     <style name="AppTheme.ThirdPartyLicences" parent="Theme.MaterialComponents.DayNight">
         <item name="actionBarStyle">@style/ThirdPartyLicencesToolbarTheme</item>
         <item name="android:statusBarColor">?android:windowBackground</item>
@@ -77,6 +82,14 @@
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primary</item>
         <item name="colorAccent">@color/accent</item>
+        <item name="android:windowAnimationStyle">@style/ThirdPartyLicencesActivityAnimation</item>
+    </style>
+
+    <style name="ThirdPartyLicencesActivityAnimation" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/slide_in_right</item>
+        <item name="android:activityOpenExitAnimation">@anim/slide_out_left</item>
+        <item name="android:activityCloseEnterAnimation">@anim/slide_in_left</item>
+        <item name="android:activityCloseExitAnimation">@anim/slide_out_right</item>
     </style>
 
     <style name="ThirdPartyLicencesToolbarTheme" parent="@style/Widget.AppCompat.Light.ActionBar.Solid">

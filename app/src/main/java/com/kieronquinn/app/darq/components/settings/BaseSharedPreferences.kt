@@ -16,6 +16,7 @@ abstract class BaseSharedPreferences {
     inline fun <reified T : Enum<T>> shared(key: String, default: Enum<T>): ReadWriteProperty<Any?, T> {
         return when(this){
             is AppSharedPreferences -> sharedEnum(key, default)
+            is XposedSharedPreferences -> sharedEnum(key, default)
             else -> throw NotImplementedError("Unknown shared prefs type")
         }
     }

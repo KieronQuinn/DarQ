@@ -16,6 +16,8 @@ abstract class SettingsViewModel: ViewModel() {
     abstract val developerOptionsVisible: Flow<Boolean>
 
     abstract fun onAdvancedOptionsClicked()
+    abstract fun onXposedClicked()
+    abstract fun onBackupRestoreClicked()
     abstract fun onAppWhitelistClicked()
     abstract fun onDeveloperOptionsClicked()
     abstract fun onAutoDarkThemeCheckedChange(checked: Boolean, sharedViewModel: ContainerSharedViewModel): Boolean
@@ -34,6 +36,18 @@ class SettingsViewModelImpl(private val navigation: Navigation, private val sett
     override fun onAdvancedOptionsClicked() {
         viewModelScope.launch {
             navigation.navigate(SettingsFragmentDirections.actionSettingsFragmentToSettingsAdvancedFragment())
+        }
+    }
+
+    override fun onBackupRestoreClicked() {
+        viewModelScope.launch {
+            navigation.navigate(SettingsFragmentDirections.actionSettingsFragmentToBackupRestoreBottomSheetFragment())
+        }
+    }
+
+    override fun onXposedClicked() {
+        viewModelScope.launch {
+            navigation.navigate(SettingsFragmentDirections.actionSettingsFragmentToXposedSettingsFragment())
         }
     }
 

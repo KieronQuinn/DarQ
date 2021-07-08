@@ -23,8 +23,6 @@ Sometimes an app launches too quickly for force dark to be applied. You may have
 ## Which apps look good when force dark is enabled?
 During testing; LinkedIn, Facebook and Google Opinion Rewards were found to be usable with force dark enabled. Plenty more will work too, it's up to you to experiment and see what works.
 
-Please note that some of the above require the Xposed module to be enabled for them to work.
-
 ## Can Force Dark be made to work on all apps without Xposed?
 No. Apps are able to disable force dark in code, so Xposed is the only way to prevent that.
 
