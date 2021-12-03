@@ -20,6 +20,8 @@ import ru.noties.markwon.AbstractMarkwonPlugin
 import ru.noties.markwon.Markwon
 import ru.noties.markwon.MarkwonSpansFactory
 import ru.noties.markwon.core.MarkwonTheme
+import java.io.IOException
+import java.util.*
 
 class SettingsFaqFragment: BoundFragment<FragmentSettingsFaqBinding>(FragmentSettingsFaqBinding::inflate), BackAvailable, AutoExpandOnRotate {
 
@@ -49,7 +51,13 @@ class SettingsFaqFragment: BoundFragment<FragmentSettingsFaqBinding>(FragmentSet
                 }
             }
         }).build()
-        val markdown = requireContext().assets.open("faq.md").bufferedReader().use { it.readText() }
+        val markdown = requireContext().assets.let {
+            try {
+                it.open("faq_${Locale.getDefault().isO3Language}.md")
+            } catch(e: IOException) {
+                it.open("faq.md")
+            }.bufferedReader()
+        }.use { it.readText() }
         binding.markdown.text = markwon.toMarkdown(markdown)
         ViewCompat.setOnApplyWindowInsetsListener(binding.markdown){ view, insets ->
             val bottomInset = insets.getInsets(WindowInsetsCompat.Type.navigationBars() or WindowInsetsCompat.Type.ime()).bottom
