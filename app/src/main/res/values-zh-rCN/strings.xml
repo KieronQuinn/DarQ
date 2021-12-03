@@ -21,7 +21,7 @@
     <string name="item_header_about">关于</string>
     <string name="item_about_faq_title">常见问题</string>
     <string name="item_about_title">DarQ v%1s</string>
-    <string name="item_about_content">作者：Kieron Quinn / Quinny899 @ XDA/n翻译：123哆3</string>
+    <string name="item_about_content">作者：Kieron Quinn / Quinny899 @ XDA\n翻译：123哆3</string>
     <string name="item_developer_options_title">开发者选项</string>
     <string name="item_developer_options_monet_color_picker_title">动态颜色选择器</string>
     <string name="item_developer_options_monet_color_picker_content">从壁纸中选取一种颜色</string>
@@ -93,7 +93,7 @@
     <string name="dialog_location_permission_use_location">使用定位</string>
     <string name="dialog_location_permission_use_timezone">使用时区 \n<small>（精准度低）</small></string>
     <string name="chip_donate">捐赠</string>
-    <string name="chip_twitter">在 Twitter 上关注我</string>
+    <string name="chip_twitter">在 Twitter 上关注作者</string>
     <string name="chip_github">GitHub</string>
     <string name="chip_xda">XDA 上的帖子</string>
     <string name="menu_open_source_libraries">开源库</string>
