@@ -21,7 +21,7 @@
     <string name="item_header_about">关于</string>
     <string name="item_about_faq_title">常见问题</string>
     <string name="item_about_title">DarQ v%1s</string>
-    <string name="item_about_content">作者：Kieron Quinn / Quinny899 @ XDA\n翻译：123哆3</string>
+    <string name="item_about_content">作者：Kieron Quinn / Quinny899 @ XDA<!--\n翻译：123哆3--></string>
     <string name="item_developer_options_title">开发者选项</string>
     <string name="item_developer_options_monet_color_picker_title">动态颜色选择器</string>
     <string name="item_developer_options_monet_color_picker_content">从壁纸中选取一种颜色</string>
@@ -56,7 +56,7 @@
     <string name="snackbar_syncing_complete_text">已将更改同步至服务。</string>
     <string name="snackbar_syncing_failed_text">同步更改失败。更改将在下次重启时应用。</string>
     <string name="snackbar_syncing_failed_button">更多信息</string>
-    <string name="loading_apps">载入软件…</string>
+    <string name="loading_apps">载入软件中…</string>
     <string name="search">搜索</string>
     <string name="app_search_empty">无结果</string>
     <string name="menu_app_picker_show_non_launchable_apps">显示没有界面的应用</string>
