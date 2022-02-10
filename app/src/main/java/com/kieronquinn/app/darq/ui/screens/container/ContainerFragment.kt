@@ -26,7 +26,6 @@ import com.kieronquinn.app.darq.service.autodark.DarqAutoDarkForegroundService
 import com.kieronquinn.app.darq.ui.base.*
 import com.kieronquinn.app.darq.utils.extensions.*
 import com.kieronquinn.monetcompat.extensions.views.applyMonet
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject

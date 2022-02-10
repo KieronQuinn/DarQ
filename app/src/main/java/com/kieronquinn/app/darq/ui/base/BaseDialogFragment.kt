@@ -92,7 +92,17 @@ abstract class BaseDialogFragment<T: ViewBinding>(private val inflate: (LayoutIn
     private fun applyBlur(ratio: Float){
         val dialogWindow = dialog?.window ?: return
         val appWindow = activity?.window ?: return
-        blurProvider.applyBlur(dialogWindow, appWindow, ratio)
+        blurProvider.applyDialogBlur(dialogWindow, appWindow, ratio)
+    }
+
+    override fun onDestroyView() {
+        if(isBlurShowing){
+            val dialogWindow = dialog?.window ?: return
+            val appWindow = activity?.window ?: return
+            blurProvider.applyDialogBlur(dialogWindow, appWindow, 0f)
+            isBlurShowing = false
+        }
+        super.onDestroyView()
     }
 
     override fun onResume() {

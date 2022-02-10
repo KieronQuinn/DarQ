@@ -60,7 +60,7 @@ class DarqServiceConnectionProvider(private val context: Context, private val se
 
     suspend fun getService(): ServiceResult {
         return serviceLock.withLock {
-            withContext(Dispatchers.IO) {
+            withContext(Dispatchers.Main) {
                 getServiceLocked() ?: ServiceResult.Failed(ServiceFailureReason.TIMEOUT)
             }
         }

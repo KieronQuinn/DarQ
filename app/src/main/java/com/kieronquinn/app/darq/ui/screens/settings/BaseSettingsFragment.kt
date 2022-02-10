@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.doOnLayout
 import androidx.core.view.updatePadding
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,7 +17,6 @@ import com.kieronquinn.app.darq.ui.base.BoundFragment
 import com.kieronquinn.app.darq.ui.screens.container.ContainerSharedViewModel
 import com.kieronquinn.app.darq.ui.utils.TransitionUtils
 import com.kieronquinn.app.darq.utils.extensions.navGraphViewModel
-import kotlinx.coroutines.flow.collect
 import org.koin.android.ext.android.inject
 
 abstract class BaseSettingsFragment<T: ViewBinding>(inflate: (LayoutInflater, ViewGroup?, Boolean) -> T): BoundFragment<T>(inflate){
