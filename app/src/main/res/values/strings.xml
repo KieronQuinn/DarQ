@@ -20,7 +20,7 @@
     <string name="item_header_about">About</string>
     <string name="item_about_faq_title">Frequently Asked Questions</string>
     <string name="item_about_title">DarQ v%1s</string>
-    <string name="item_about_content">Created by Kieron Quinn / Quinny899 @ XDA</string>
+    <string name="item_about_content">Created by Kieron Quinn / Quinny899 @ XDA\nChinese translation by 123Duo3</string>
     <string name="item_developer_options_title">Developer Options</string>
     <string name="item_developer_options_monet_color_picker_title">Monet Color Picker</string>
     <string name="item_developer_options_monet_color_picker_content">Pick a color to use from your wallpaper</string>

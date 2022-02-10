@@ -2,10 +2,9 @@ package com.kieronquinn.app.darq.ui.utils
 
 import android.content.Context
 import android.view.animation.AnimationUtils
-import androidx.core.transition.doOnEnd
-import com.google.android.material.transition.platform.FadeThroughProvider
-import com.google.android.material.transition.platform.MaterialSharedAxis
-import com.google.android.material.transition.platform.SlideDistanceProvider
+import com.google.android.material.transition.FadeThroughProvider
+import com.google.android.material.transition.MaterialSharedAxis
+import com.google.android.material.transition.SlideDistanceProvider
 import com.kieronquinn.app.darq.R
 import kotlin.math.roundToInt
 

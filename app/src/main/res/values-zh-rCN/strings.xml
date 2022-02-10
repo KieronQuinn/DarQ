@@ -21,7 +21,7 @@
     <string name="item_header_about">关于</string>
     <string name="item_about_faq_title">常见问题</string>
     <string name="item_about_title">DarQ v%1s</string>
-    <string name="item_about_content">作者：Kieron Quinn / Quinny899 @ XDA<!--\n翻译：123哆3--></string>
+    <string name="item_about_content">作者：Kieron Quinn / Quinny899 @ XDA\n翻译：123哆3</string>
     <string name="item_developer_options_title">开发者选项</string>
     <string name="item_developer_options_monet_color_picker_title">动态颜色选择器</string>
     <string name="item_developer_options_monet_color_picker_content">从壁纸中选取一种颜色</string>
