@@ -24,7 +24,6 @@ import com.kieronquinn.app.darq.utils.extensions.expandAppBar
 import com.kieronquinn.app.darq.utils.extensions.navGraphViewModel
 import com.kieronquinn.monetcompat.extensions.views.applyMonetRecursively
 import com.kieronquinn.monetcompat.extensions.views.enableStretchOverscroll
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel

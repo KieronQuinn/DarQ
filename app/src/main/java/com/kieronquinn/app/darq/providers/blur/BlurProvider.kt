@@ -15,7 +15,7 @@ abstract class BlurProvider {
 
         fun getBlurProvider(resources: Resources): BlurProvider {
             return when {
-                Build.VERSION.SDK_INT >= 31 || BuildCompat.isAtLeastS() -> BlurProvider31(resources)
+                Build.VERSION.SDK_INT >= 31 -> BlurProvider31(resources)
                 Build.VERSION.SDK_INT >= 30 -> BlurProvider30(resources)
                 else -> BlurProvider29()
             }
@@ -25,7 +25,8 @@ abstract class BlurProvider {
     abstract val minBlurRadius: Float
     abstract val maxBlurRadius: Float
 
-    abstract fun applyBlur(dialogWindow: Window, appWindow: Window, ratio: Float)
+    abstract fun applyDialogBlur(dialogWindow: Window, appWindow: Window, ratio: Float)
+    abstract fun applyBlurToWindow(window: Window, ratio: Float)
 
     internal fun Window.clearDimming() {
         clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)

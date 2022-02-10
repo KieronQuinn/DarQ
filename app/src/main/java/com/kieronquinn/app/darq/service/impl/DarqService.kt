@@ -294,7 +294,7 @@ class DarqService(private val serviceType: DarqServiceConnectionProvider.Service
                 location ?: return null
             }
             return LatLng(location.latitude, location.longitude)
-        }catch (e: Exception){
+        }catch (e: Throwable){
             null
         }
     }
