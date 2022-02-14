@@ -89,7 +89,7 @@
     <string name="auto_dark_foreground_notification_failed_content">テーマの適用に失敗しました、デバイスを再起動してみてください。</string>
     <string name="chip_github">GitHub</string>
     <string name="chip_xda">XDA スレッド</string>
-    <string name="menu_open_source_libraries">オープンソース ライブラリの一覧を開く</string>
+    <string name="menu_open_source_libraries">オープンソース ライブラリの一覧</string>
     <string name="bottom_sheet_update_available_title">アップデートが利用可能です</string>
     <string name="bottom_sheet_update_available_positive">ダウンロード</string>
     <string name="bottom_sheet_update_available_negative">閉じる</string>
