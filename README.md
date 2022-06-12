@@ -1,4 +1,4 @@
-# DarQ https://img.shields.io/endpoint?url=https://apt.izzysoft.de/fdroid/api/v1/shield/com.kieronquinn.app.darq&label=IzzyOnDroid&cacheSeconds=86400
+# DarQ <center><img src="https://img.shields.io/endpoint?url=https://apt.izzysoft.de/fdroid/api/v1/shield/com.kieronquinn.app.darq&label=IzzyOnDroid&cacheSeconds=86400"></center>
 
 ![DarQ](https://i.imgur.com/PFfaGMrl.png)
 
