@@ -4,6 +4,7 @@
 
 <div class="Status-Badge">
   <center>
+    
 [![Build debug apk](https://github.com/mrx7014/DarQ/actions/workflows/android.yml/badge.svg)](https://github.com/mrx7014/DarQ/actions/workflows/android.yml)
   </center>
 </div>
