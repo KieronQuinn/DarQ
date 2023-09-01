@@ -72,7 +72,7 @@
     <string name="bottom_sheet_shizuku_not_installed_negative">إغلاق</string>
     <string name="bottom_sheet_shizuku_not_installed_neutral">مزيد من المعلومات</string>
     <string name="bottom_sheet_shizuku_more_info_title">شيزوكو</string>
-    <string name="bottom_sheet_shizuku_more_info_content"><b>Shizuku</b> هو تطبيق وإطار عمل للتطبيقات لتشغيل التعليمات البرمجية بأذونات ADB.\nتمامًا مثل برنامج ADB النصي المستخدم في الإصدارات السابقة من DarQ، يجب عليك تشغيل الخدمة مرة واحدة لكل تمهيد.\nومع ذلك، على عكس t, كما يفعل DarQ)، لبدء خدماتهم الخاصة به، دون الحاجة إلى أمر آخر. هذا مشابه جدًا لتطبيقات الجذر والمستخدم الخارق, في الواقع، Shizuku هو في الأساس ذلك - إطار عمل يشبه المستخدم المتميز لتشغيل تعليمات برمجية مرتفعة.\nيسمح لك Shizuku أيضًا باستخدام تصحيح الأخطاء اللاسلكية على نظام Android 11 والإصدارات الأحدث للاتصال <b><i>بجهازك الخاص</i></b></string>
+    <string name="bottom_sheet_shizuku_more_info_content"><b>Shizuku</b> هو تطبيق وإطار عمل للتطبيقات لتشغيل التعليمات البرمجية بأذونات ADB.\nتمامًا مثل برنامج ADB النصي المستخدم في الإصدارات السابقة من DarQ، يجب عليك تشغيل الخدمة مرة واحدة لكل تمهيد.\nومع ذلك، على عكس t, كما يفعل DarQ)، لبدء خدماتهم الخاصة به، دون الحاجة إلى أمر آخر. هذا مشابه جدًا لتطبيقات الجذر والمستخدم الخارق, في الواقع، Shizuku هو في الأساس ذلك - إطار عمل يشبه المستخدم المتميز لتشغيل تعليمات برمجية مرتفعة.\nيسمح لك Shizuku أيضًا باستخدام تصحيح الأخطاء اللاسلكية على نظام Android 11 والإصدارات الأحدث للاتصال<i>بجهازك الخاص</i></b></string>
     <string name="boot_foreground_service_notification_title">DarQ</string>
     <string name="boot_foreground_service_notification_content">بدء تشغيل خدمة DarQ...</string>
     <string name="boot_foreground_service_notification_failed_title">فشل في بدء خدمة DarQ</string>
