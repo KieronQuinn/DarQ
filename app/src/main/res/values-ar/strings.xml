@@ -48,7 +48,7 @@
     <string name="item_xposed_invert_status_bar_fix_title">إصلاح انكاس شريط الحالة</string>
     <string name="item_xposed_invert_status_bar_fix_content">محاولة تعطيل انعكاس شريط الحالة في التطبيقات المفروض عليها الوضع الداكن، وإصلاح الرموز الداكنة على الخلفية الداكنة</string>
     <string name="item_xposed_info_title">Xposed ملاحظات</string>
-    <string name="item_xposed_info_content">إذا كنت تستخدم EdXpose في وضع القائمة البيضاء للتطبيق، أو تستخدم lspose، فيجب عليك أيضًا تمكين جميع التطبيقات التي تريد تطبيقها عليها في مدير Xpose الخاص بك, وكذلك في DarQ.\nيجب إعادة تشغيل التطبيقات بعد تغيير الإعدادات حتى يتم تطبيقها.\nإذا لم يتم تطبيق إعداد أو تطبيق فرض الظلام المحدد حديثًا، فحاول إعادة التشغيل، وتشغيل DarQ ثم تشغيل </string>
+    <string name="item_xposed_info_content">إذا كنت تستخدم Xposed في وضع القائمة البيضاء للتطبيق، أو تستخدم Lsposed، فيجب عليك أيضًا تمكين جميع التطبيقات التي تريد تطبيقها عليها في مدير Xposed الخاص بك, وكذلك في DarQ.\nيجب إعادة تشغيل التطبيقات بعد تغيير الإعدادات حتى يتم تطبيقها.\nإذا لم يتم تطبيق إعداد أو تطبيق فرض الظلام المحدد حديثًا، فحاول إعادة التشغيل، وتشغيل DarQ ثم تشغيل </string>
     <string name="color_picker_unavailable">Monet Color Picker غير متاح لخلفية الشاشة المحددة حاليًا</string>
     <string name="loading_service_connect">جارٍ الاتصال بالخدمة…</string>
     <string name="snackbar_syncing_text">جارٍ مزامنة التغييرات مع الخدمة...</string>
