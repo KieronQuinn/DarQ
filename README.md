@@ -2,6 +2,8 @@
 
 ![DarQ](https://i.imgur.com/PFfaGMrl.png)
 
+[![Build debug apk](https://github.com/mrx7014/DarQ/actions/workflows/android.yml/badge.svg)](https://github.com/mrx7014/DarQ/actions/workflows/android.yml)
+
 DarQ provides a per-app selectable force dark option for Android 10 and above. 
 
 It uses a root or [Shizuku](https://shizuku.rikka.app/) (ADB) service to apply the theme seamlessly and quickly, without needing an accessibility service.
