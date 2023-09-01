@@ -20,7 +20,7 @@
     <string name="item_header_about">حول</string>
     <string name="item_about_faq_title">أسئلة مكررة</string>
     <string name="item_about_title">DarQ v%1s</string>
-    <string name="item_about_content">أنشئ بواسطة Kieron Quinn / Quinny899 @ XDA\nالترجمة الصينية بواسطة 123Duo3</string>
+    <string name="item_about_content">أنشئ بواسطة Kieron Quinn / تم تعريبه بواسطة MRX7014 & Mohamed Bahaa</string>
     <string name="item_developer_options_title">خيارات للمطور</string>
     <string name="item_developer_options_monet_color_picker_title">منتقي ألوان Monet</string>
     <string name="item_developer_options_monet_color_picker_content">اختر لونًا لاستخدامه من خلفيتك</string>
@@ -40,7 +40,7 @@
     <string name="item_backup_restore_restore_success">تمت الاستعادة بنجاح</string>
     <string name="item_backup_restore_restore_failed">فشلت عملية الاستعادة</string>
     <string name="item_backup_restore_restore_running">استعادة النسخة الاحتياطية...</string>
-    <string name="item_backup_restore_restore">يعيد</string>
+    <string name="item_backup_restore_restore">استعاده</string>
     <string name="item_xposed_title">Xposed إضافة</string>
     <string name="item_xposed_content">تغيير إعدادات إضافة DarQ Xposed</string>
     <string name="item_xposed_aggressive_dark_title">فرض الوضع الداكن بشكل عدواني</string>
